@@ -53,6 +53,7 @@ h1, h2, h3, h4, p {
 }
 
 button {
+  border-color:transparent;
   color: #FFFFFF;
   font-family: 'Noto Sans', serif;
 }
