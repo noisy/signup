@@ -22,8 +22,7 @@ Vue.use(Router)
 export default new Router({
   mode: 'history',
   routes: [
-    { path: '/', redirect: '/sign_in' },
-    { path: '/sign_in', name: 'signup', component: SignUp },
+    { path: '/',  name: 'signup', component: SignUp },
     { path: '/login', name: 'login', component: Login },
     { path: '/pick_account', name: 'pick_account', component: pickAccount },
     { path: '/confirm_phone', name: 'confirm_phone', component: confirmPhone },
@@ -34,6 +33,6 @@ export default new Router({
     { path: '/callback/login', name: 'login_callback', loginCallback },
     { path: '/success/email', name: 'success_email', successEmail },
     { path: '/success/phone', name: 'success_phone', successPhone },
-    { path: '*', redirect: 'sign_in' }
+    { path: '*', redirect: '/' }
   ]
 })

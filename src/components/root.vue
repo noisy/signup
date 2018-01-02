@@ -2,16 +2,18 @@
   <div class="Box__container">
       <div class="Box__inner">
       </div>
-      <div><p class="text__grey">Have an account? <a href="/login">Login</a></p></div>
+      <login/>
   </div>
 </template>
 
 
 <script>
 import signup from './steps/signup'
+import Login from './partials/login'
 export default {
     components: {
-        signup
+        signup,
+        login
     },
     data() {
     return {

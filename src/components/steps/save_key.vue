@@ -10,7 +10,7 @@
                 </div>
                 <div class="SaveKey__footer">
                   <button class="Btn__blue Btn__save" @click="saveKey()"><img src="./../../assets/ic_download.svg">SAVE</button>
-                  <router-link v-show="saved_key" to="login" class="Login__text">LOGIN</router-link>
+                  <a href="https://v2.steemconnect.com/oauth2/authorize?client_id=utopian.app&response_type=code&redirect_uri=https%3A%2F%2Futopian.io%2Fcallback&scope=vote,comment,comment_delete,comment_options,custom_json,claim_reward_balance,offline" v-show="saved_key" to="login" class="Login__text">LOGIN</a>
                 </div>
             </div>
       </div>

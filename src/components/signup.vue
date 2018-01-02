@@ -7,20 +7,24 @@
                 <div><button class="btn__signin" id="github" @click="signIn('/callback/sign_in')"><img src="./../assets/ic_github.svg"><span>SIGN IN WITH GITHUB</span></button></div>
                 <div><button class="btn__signin" id="facebook" @click="signIn('/callback/sign_in')"><img src="./../assets/ic_facebook.svg"><span>SIGN IN WITH FACEBOOK</span></button></div>
                 <div><button class="btn__signin" id="linkedin" @click="signIn('/callback/sign_in')"><img src="./../assets/ic_linkedIn.svg"><span>SIGN IN WITH LINKEDIN</span></button></div>
-                <div><button class="btn__signin" id="email" @click="signIn('/verify_mail')"><img src="./../assets/ic_email.svg"><span>SIGN IN WITH EMAIL </span></button></div>
+                <!--<div><button class="btn__signin" id="email" @click="signIn('/verify_mail')"><img src="./../assets/ic_email.svg"><span>SIGN IN WITH EMAIL </span></button></div>-->
             </div>
         </div>
-    <div><p class="text__grey">Have an account? <router-link to="login">Login</router-link></p></div>
+        <Login/>
 </div>
     
 </template>
 
 
 <script>
+import Login from './partials/login'
 export default {
     name: 'signup',
     methods: {
         signIn(to) { this.$router.push(to) }
+    },
+    components: {
+        Login
     }
 }
 </script>

@@ -12,7 +12,7 @@
           <div>
             <button class="Btn__blue" :disabled="input_code.length < 4" @click="submitCode()">CONTINUE</button>
           </div>
-          <div style="height:24px;widht:100%;"><p class="text__error" v-show="this.input_error">{{input_error}}</p></div>
+          <div style="height:24px;width:100%;"><p class="text__error" v-show="this.input_error">{{input_error}}</p></div>
         </div>
       </div>
   </div>

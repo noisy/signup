@@ -35,7 +35,6 @@ export default {
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.035);
 }
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -44,7 +43,7 @@ export default {
 
 body {
   margin:0;
-  font-family: 'Lato' !important;
+  font-family: 'Lato', sans-serif;
   background-color: #FAFBFC;
 }
 

@@ -12,12 +12,13 @@
           <div style="height:24px;widht:100%;"><p class="text__error" v-show="this.input_error">{{input_error}}</p></div>
         </div>
       </div>
-      <div><p class="text__grey">Have an account? <router-link to="login">Login</router-link></p></div>
+      <Login/>
   </div>
 </template>
 
 <script>
 import loadingbar from './../partials/loading_bars/loading_bar_start.vue'
+import Login from './../partials/login'
 import { mapGetters } from 'vuex'
 export default {
   computed: {

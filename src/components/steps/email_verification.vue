@@ -11,16 +11,17 @@
           <div>
             <button class="Btn__blue" :disabled="!input_email || input_email.length < 5" @click="goTo()">CONTINUE</button>
           </div>
-          <div style="height:24px;widht:100%;"><p class="text__error" v-show="this.input_error">{{input_error}}</p></div>
+          <div style="height:24px;width:100%;"><p class="text__error" v-show="this.input_error">{{input_error}}</p></div>
         </div>
       </div>
-      <div><p class="text__grey">Have an account? <router-link to="login">Login</router-link></p></div>
+      <Login/>
   </div>
 </template>
 
 <script>
 import loadingbar from './../partials/loading_bars/loading_bar_1_3.vue'
 import { mapGetters } from 'vuex'
+import Login from './../partials/login.vue'
 export default {
   computed: {
     ...mapGetters([
@@ -34,7 +35,8 @@ export default {
 
   },
   components: {
-    loadingbar
+    loadingbar,
+    Login
   },
   data() {
     return {
