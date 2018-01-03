@@ -1,8 +1,8 @@
 <template>
   <div class="Navbar__container">
       <div class="Navbar__inner">
-          <div class="left"><a class="Topnav__brand" href="/"><img id="MainLogo" src="../../assets/utopian-sole.png"></a>
-      <span class="Topnav__version"><a class="Topnav__version" href="/"><span>&nbsp;&nbsp;</span>beta</a></span></div>
+          <div class="left" style="position: relative"><a class="Topnav__brand" href="/"><img id="MainLogo" src="../../assets/utopian-sole.png"></a>
+      <span class="Topnav__container"><router-link to="/" class="Topnav__version"><span>&nbsp;&nbsp;</span>beta</router-link></span></div>
       </div>
   </div>
 </template>
@@ -20,7 +20,8 @@ export default {
 }
 
 .Navbar__container {
-    height: 55px;
+    height: 56px;
+    line-height: 56px;
     width:100%;
     background-color: #000;/* #24292E;*/
     box-shadow: inset 0 -1px 0 0 #EDEDED;
@@ -55,18 +56,18 @@ export default {
     font-weight: 300;
 }
 
+.Topnav__container {
+    position: absolute;
+    left: 44px;
+    top: 3px;
+}
+
 .Topnav__brand img {
     padding-top: 0;
-    height: 40px;
+    height: 35px;
+    padding-bottom: 6px;
     vertical-align: middle;
 }
 
-@media screen and (max-width: 736px) {
-.Topnav__brand img {
-    padding-top: 0;
-    padding-bottom: 0;
-    height: 35px;
-    vertical-align: middle;
-}
-}
+
 </style>
