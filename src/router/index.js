@@ -3,6 +3,7 @@ import Router from 'vue-router'
 //import Root from '@/components/root'
 import SignUp from '@/components/signup'
 import Login from '@/components/login'
+import store from '../store/store'
 
 import pickAccount from '@/components/steps/pick_account'
 import saveKey from '@/components/steps/save_key'
@@ -19,20 +20,29 @@ import loginCallback from '@/components/callbacks/login'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     { path: '/',  name: 'signup', component: SignUp },
     { path: '/login', name: 'login', component: Login },
-    { path: '/pick_account', name: 'pick_account', component: pickAccount },
-    { path: '/confirm_phone', name: 'confirm_phone', component: confirmPhone },
-    { path: '/verify_mail', name: 'verify_mail', component: verifyMail },
-    { path: '/verify_phone', name: 'verify_phone', component: verifyPhone },
+    { path: '/pick_account', name: 'pick_account', component: pickAccount, meta: {requiresSignIn: true , requiresMod: true} },
+    { path: '/confirm_phone', name: 'confirm_phone', component: confirmPhone, meta: {requiresSignIn: true, requiresMod: true} },
+    { path: '/verify_mail', name: 'verify_mail', component: verifyMail, meta: {requiresSignIn: true }},
+    { path: '/verify_phone', name: 'verify_phone', component: verifyPhone, meta: {requiresSignIn: true }},
     { path: '/save_key', name: 'save_key', component: saveKey },
-    { path: '/callback/sign_in', name: 'signin_callback', component: signInCallback },
+    { path: '/auth/callback', name: 'signin_callback', component: signInCallback },
     { path: '/callback/login', name: 'login_callback', loginCallback },
     { path: '/success/email', name: 'success_email', successEmail },
     { path: '/success/phone', name: 'success_phone', successPhone },
     { path: '*', redirect: '/' }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresSignIn)) {
+    if (!store.getters.currentUserObject.social_name && !store.getters.loggingIn) { next({path: '/'}) } 
+    else { next() }
+  } else { next() }
+})
+
+export default router
