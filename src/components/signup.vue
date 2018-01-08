@@ -4,9 +4,9 @@
             <div>
                 <h1>Welcome to Utopian.io</h1>
                 <p>A place where you can earn rewards by contributing to your favorite open source projects.</p>
-                <div><button class="btn__signin" id="github" @click="signIn('/callback/sign_in')"><img src="./../assets/ic_github.svg"><span>SIGN IN WITH GITHUB</span></button></div>
-                <div><button class="btn__signin" id="facebook" @click="signIn('/callback/sign_in')"><img src="./../assets/ic_facebook.svg"><span>SIGN IN WITH FACEBOOK</span></button></div>
-                <div><button class="btn__signin" id="linkedin" @click="signIn('/callback/sign_in')"><img src="./../assets/ic_linkedIn.svg"><span>SIGN IN WITH LINKEDIN</span></button></div>
+                <div><button class="btn__signin" id="github" @click="authenticate('github')"><img src="./../assets/ic_github.svg"><span>SIGN IN WITH GITHUB</span></button></div>
+                <div><button class="btn__signin" id="facebook" @click="authenticate('facebook')"><img src="./../assets/ic_facebook.svg"><span>SIGN IN WITH FACEBOOK</span></button></div>
+                <!--<div><button class="btn__signin" id="linkedin" @click="authenticate('linkedin')"><img src="./../assets/ic_linkedIn.svg"><span>SIGN IN WITH LINKEDIN</span></button></div>-->
                 <!--<div><button class="btn__signin" id="email" @click="signIn('/verify_mail')"><img src="./../assets/ic_email.svg"><span>SIGN IN WITH EMAIL </span></button></div>-->
             </div>
         </div>
@@ -17,11 +17,29 @@
 
 
 <script>
+import { mapGetters } from 'vuex'
 import Login from './partials/login'
 export default {
     name: 'signup',
+    computed: {
+        ...mapGetters([
+        "isAuthenticated"
+        ])
+    },
     methods: {
-        signIn(to) { this.$router.push(to) }
+        signIn(to) { this.$router.push(to) },
+        authenticate(provider) {
+            this.$store.dispatch('authenticate', { provider })
+            .then(response => {
+                if(response.status !== 200) { return this.$router.push('/') }
+                let user = response.data.user
+
+                if(user.has_created_acc) { return this.$router.push('/') }
+                if((user.social_verified || user.sms_verified) && user.email_verified) { this.$router.push('/pick_account') }
+                else if(!user.email_verified) { this.$router.push('/verify_mail') }
+                else { this.$router.push('/verify_phone') }
+            })
+        }
     },
     components: {
         Login
