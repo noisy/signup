@@ -26,18 +26,27 @@ export default {
         "isAuthenticated"
         ])
     },
+    created() {
+        
+    },
     methods: {
         signIn(to) { this.$router.push(to) },
         authenticate(provider) {
             this.$store.dispatch('authenticate', { provider })
             .then(response => {
-                if(response.status !== 200) { return this.$router.push('/') }
+                
+                if(response.status !== 200) {
+                    this.$notify({ group: 'main', text: response.message, type:'error' })
+                    return this.$router.push('/')
+                }
                 let user = response.data.user
-
                 if(user.has_created_acc) { return this.$router.push('/') }
                 if((user.social_verified || user.sms_verified) && user.email_verified) { this.$router.push('/pick_account') }
                 else if(!user.email_verified) { this.$router.push('/verify_mail') }
                 else { this.$router.push('/verify_phone') }
+            })
+            .catch(error => {
+                console.log('error', error)
             })
         }
     },

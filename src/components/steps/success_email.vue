@@ -1,12 +1,12 @@
 <template>
-<div class="Box__container">
+  <div class="Box__container">
       <div class="Box__inner">
-        <div class="PhoneVerif">
-          <loadingbar class="loadingbar"/>
-          <h1>Thanks for confirming your phone number!</h1>
-          <p>You’re a few steps away from getting to the top of the list. Check your email and click the email validation link.</p>
-          <p>After validating your sign up request with us we’ll look it over for approval. As soon as your turn is up and you’re approved, you’ll be sent a link to finalize your account!</p>
+        <div class="Success">
+          <h1 style="padding-bottom:5px;">Email Confirmation</h1>
+          <p>You’re now only a few steps away from having your own Utopian Account.</p>
+          <p>Open the Email we've send you and click on the confirmation-link.</p>
           <div style="height:24px;width:100%;"><p class="text__error" v-show="this.input_error">{{input_error}}</p></div>
+          <a style="cursor:pointer" @click="resendMail()">Resend Email</a>
         </div>
       </div>
   </div>
@@ -21,25 +21,20 @@ export default {
       'chosenAccountName'
     ])
   },
-  watch: {
-    input_account: function() {
-      this.getAccount()
-    },
-
-  },
   components: {
     loadingbar
   },
   data() {
     return {
-      input_country_code: '',
-      input_phone_number: '',
       input_error: ''
     }
   },
   methods: {
-      sendPhone() {
-          this.$router.push('/confirm_phone')
+      resendMail() {
+          this.$store.dispatch('requestMail', { email: this.$store.state.chosen_email })
+          .catch(response => {
+            this.$notify({ group: 'main', text: response.response.data.message, type:'error' })
+          })
       }
   }
 }
@@ -53,6 +48,9 @@ export default {
   border-left: 1px solid #E0E2E5;
 }
 
+.Success {
+  height:160px;
+}
 
 
 </style>

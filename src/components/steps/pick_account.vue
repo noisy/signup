@@ -9,7 +9,7 @@
             <input class="Input__utopian" style="margin-right:10px;" placeholder="Enter your username" v-model="input_account"></input>
             <button class="Btn__blue" :disabled="!chosenAccountName" @click="createAccount()">CONTINUE</button>
           </div>
-          <div style="height:24px;widht:100%;"><p class="text__error" v-show="this.input_error">{{input_error}}</p></div>
+          <div style="height:24px;width:100%;"><p class="text__error" v-show="this.input_error">{{input_error}}</p></div>
         </div>
       </div>
       <Login/>
