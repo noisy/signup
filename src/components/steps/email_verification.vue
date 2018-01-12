@@ -9,7 +9,7 @@
             <img src="./../../assets/ic_email.svg"><input class="Input__utopian" style="margin-right:10px;" placeholder="Enter your email" v-model="input_email"></input>
           </div>
           <div>
-            <button class="Btn__blue" :disabled="!input_email || input_email.length < 5" @click="goTo()">CONTINUE</button>
+            <button class="Btn__blue" :disabled="!input_email || input_email.length < 5" @click="verify_mail()">CONTINUE</button>
           </div>
           <div style="height:24px;width:100%;"><p class="text__error" v-show="this.input_error">{{input_error}}</p></div>
         </div>
@@ -29,9 +29,6 @@ export default {
     ])
   },
   watch: {
-    input_account: function() {
-      this.getAccount()
-    },
 
   },
   components: {
@@ -45,8 +42,16 @@ export default {
     }
   },
   methods: {
-      goTo() {
-          this.$router.push('/verify_phone')
+      verify_mail() {
+          this.$store.commit('setChosenEmail', { email: this.input_email })
+          this.$store.dispatch('requestMail', { email: this.input_email })
+          .then(response => {
+            if(response.status === 200) {
+              this.$router.push('/email/success')
+            } else {
+              this.$notify({ group: 'main', text: response.response.data.message, type:'error' })
+            }
+          })
       }
   }
 }

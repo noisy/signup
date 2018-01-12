@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <navbar v-if="$route.name !== 'login'"></navbar>
+    <notifications style="margin-top:75px;" position="top center" group="main" />
     <router-view/>
   </div>
 </template>

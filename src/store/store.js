@@ -27,6 +27,7 @@ const store = new Vuex.Store({
         verification_required: true,
         isAuthenticated: false,
         chosen_account_name:'',
+        chosen_email:'',
         current_user_object: {}
     },
     actions: {
@@ -36,27 +37,29 @@ const store = new Vuex.Store({
                 commit('setChosenAccName', { name })
                 return acc[0]
             })
+            .catch(err => { return err })
         },
         authenticate: async ({commit, state }, payload) => {
-           let this_ = this
            let { provider } = payload
            return vueAuth.authenticate(provider)
-            .then(function(response) {
-                commit('setCurrentUserObject', { object: response.data.user })
-                return response
-            })
-            .catch(function (err) {
-              this_.response = err
-              console.log(err)
-            })
+                         .then(response => { commit('setCurrentUserObject', { object: response.data.user }); return response })
+                         .catch(err => { return err })
         },
-        sendMail: ({ commit, state }, payload) => {
-
+        requestMail: ({ commit, state }, payload) => {
+            return axios.post(`${process.env.API_PATH}/auth/email/request`, { user_id: state.current_user_object._id, email: payload.email })
+                        .then(response => { return response })
+                        .catch(err => { return err })
+        },
+        confirmMail: ({ commit, state}, payload) => {
+            return axios.post(`${process.env.API_PATH}/auth/email/confirm`, { token: payload.token })
+                        .then(response => { return response })
+                        .catch(err => { return err })
         }
     },
     mutations: {
         setCurrentUserObject: (state, { object }) => { Vue.set(state, 'current_user_object', object) },
-        setChosenAccName: (state, { name }) => { Vue.set(state, 'chosen_account_name', name) }
+        setChosenAccName: (state, { name }) => { Vue.set(state, 'chosen_account_name', name) },
+        setChosenEmail: (state, { email }) => { Vue.set(state, 'chosen_email', email) }
     },
     getters: {
         currentUserObject: state => { return state.current_user_object },
