@@ -37,42 +37,23 @@ const store = new Vuex.Store({
                 commit('setChosenAccName', { name })
                 return acc[0]
             })
+            .catch(err => { return err })
         },
         authenticate: async ({commit, state }, payload) => {
            let { provider } = payload
            return vueAuth.authenticate(provider)
-            .then(response => {
-                commit('setCurrentUserObject', { object: response.data.user })
-                return response
-            })
-            .catch((err) => {
-              return err
-            })
+                         .then(response => { commit('setCurrentUserObject', { object: response.data.user }); return response })
+                         .catch(err => { return err })
         },
         requestMail: ({ commit, state }, payload) => {
-            return axios.post(`${process.env.API_PATH}/auth/email/request`, {
-                user_id: state.current_user_object._id,
-                email: payload.email
-            })
-            .then(response => {
-                console.log(response)
-                return response
-            })
-            .catch((err) => {
-                return err
-            })
+            return axios.post(`${process.env.API_PATH}/auth/email/request`, { user_id: state.current_user_object._id, email: payload.email })
+                        .then(response => { return response })
+                        .catch(err => { return err })
         },
         confirmMail: ({ commit, state}, payload) => {
-            return axios.post(`${process.env.API_PATH}/auth/email/confirm`, {
-                token: payload.token
-            })
-            .then(response => {
-                console.log(response)
-                return response
-            })
-            .catch((err) => {
-                return err
-            })
+            return axios.post(`${process.env.API_PATH}/auth/email/confirm`, { token: payload.token })
+                        .then(response => { return response })
+                        .catch(err => { return err })
         }
     },
     mutations: {
