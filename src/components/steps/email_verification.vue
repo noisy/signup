@@ -49,7 +49,7 @@ export default {
             if(response.status === 200) {
               this.$router.push('/email/success')
             } else {
-              this.$notify({ group: 'main', text: response.response.data.message, type:'error' })
+              this.$notify({ group: 'main', text: response.data.message, type:'error' })
             }
           })
       }
