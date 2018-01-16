@@ -43,17 +43,27 @@ const store = new Vuex.Store({
            let { provider } = payload
            return vueAuth.authenticate(provider)
                          .then(response => { commit('setCurrentUserObject', { object: response.data.user }); return response })
-                         .catch(err => { return err })
+                         .catch(err => { return err.response ? err.response : err })
         },
         requestMail: ({ commit, state }, payload) => {
             return axios.post(`${process.env.API_PATH}/auth/email/request`, { user_id: state.current_user_object._id, email: payload.email })
                         .then(response => { return response })
-                        .catch(err => { return err })
+                        .catch(err => { return err.response ? err.response : err })
         },
         confirmMail: ({ commit, state}, payload) => {
             return axios.post(`${process.env.API_PATH}/auth/email/confirm`, { token: payload.token })
                         .then(response => { return response })
-                        .catch(err => { return err })
+                        .catch(err => { return err.response ? err.response : err })
+        },
+        requestPhone: ({ commit, state }, payload) => {
+            return axios.post(`${process.env.API_PATH}/auth/phone/request`, { user_id: state.current_user_object._id, country_code: payload.country_code, phone_number: payload.phone_number })
+                        .then(response => { return response })
+                        .catch(err => { console.log(err); return err.response ? err.response : err })
+        },
+        confirmPhone: ({ commit, state }, payload) => {
+            return axios.post(`${process.env.API_PATH}/auth/phone/confirm`, { user_id: state.current_user_object._id, code: payload.code })
+                        .then(response => { return response })
+                        .catch(err => { console.log(err);return err.response ? err.response : err })
         }
     },
     mutations: {

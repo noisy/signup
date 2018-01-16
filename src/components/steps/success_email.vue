@@ -33,7 +33,7 @@ export default {
       resendMail() {
           this.$store.dispatch('requestMail', { email: this.$store.state.chosen_email })
           .catch(response => {
-            this.$notify({ group: 'main', text: response.response.data.message, type:'error' })
+            this.$notify({ group: 'main', text: response.data.message, type:'error' })
           })
       }
   }

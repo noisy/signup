@@ -9,13 +9,15 @@ export default {
         .then(response => {
             if(response.status === 200) {
                 this.$store.commit('setCurrentUserObject', { object: response.data.user })
-                this.$router.push('/verify_phone')
+                if(user.social_verified || user.sms_verified) {
+                    this.$router.push('/pick_account')
+                } else { this.$router.push('/verify_phone') }
+                
             } else {
                 // display error
                 this.$notify({ group: 'main', text: response.response.data.message, type:'error' })
             }
         })
-        //
     }
 }
 </script>

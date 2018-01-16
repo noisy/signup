@@ -4,14 +4,15 @@
         <div class="PhoneVerif">
           <loadingbar class="loadingbar"/>
           <h1>Almost there</h1>
-          <p>We just need to send you a quick text.</p>
-          <div style="margin-bottom:10px;"  class="Code__Input">
-            <img src="./../../assets/ic_earth.svg"><input class="Input__utopian" style="margin-right:10px; border: 1px solid #000000;" placeholder="Country code" v-model="input_country_code"></input>
+          <p>We just need to verify your phone number and send you a quick text.</p>
+          <div style="margin-bottom:2px;"  class="Code__Input">
+            <img src="./../../assets/ic_earth.svg"><input class="Input__utopian" style="margin-right:10px; border: 1px solid #000000;" placeholder="Country-Code" v-model="input_country_code"></input>
           </div>
-          <div style="margin-bottom:10px;"  class="PhoneVerif__Input">
+          <a style="text-decoration:none;color:#4786FF;font-size:14px;text-align:left;" target="_blank" href="https://countrycode.org/">Country-Code List</a>
+          <div style="margin-top:8px;margin-bottom:10px;"  class="PhoneVerif__Input">
             <img src="./../../assets/ic_phone.svg"><input class="Input__utopian" style="margin-right:10px;" placeholder="Phone number" v-model="input_phone_number"></input>
           </div>
-          <p class="PhoneVerif__Input-text">Examples: 544-765-3062 | 89-567-48018</p>
+          <p class="PhoneVerif__Input-text">Example: 123456789</p>
           <p class="PhoneVerif__Input-text">* Land lines cannot receive SMS messages</p>
           <p class="PhoneVerif__Input-text">* Message and data rates may apply</p>
           <div>
@@ -50,7 +51,16 @@ export default {
   },
   methods: {
       sendPhone() {
-          this.$router.push('/confirm_phone')
+        this.$store.dispatch('requestPhone', {  country_code: this.input_country_code, phone_number: this.input_phone_number })
+        .then(response => {
+          console.log(response)
+          if(response.status === 200) {
+            console.log('push')
+            this.$router.push('/confirm_phone')
+          } else {
+            this.$notify({ group: 'main', text: response.data.message, type:'error' })
+          }
+        })
       }
   }
 }
@@ -70,7 +80,7 @@ export default {
 }
 
 .PhoneVerif {
-    height: 320px;
+    height: 360px;
 }
 
 .PhoneVerif h1 {

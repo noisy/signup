@@ -28,7 +28,7 @@ const router = new Router({
     { path: '/verify_mail', name: 'verify_mail', component: verifyMail, meta: { requiresSignIn: true }},
     { path: '/verify_phone', name: 'verify_phone', component: verifyPhone, meta: { requiresSignIn: true }},
     { path: '/email/success', name: 'success_email', component: successEmail, meta: { requiresSignIn: true } },
-    { path: '/confirm_phone', name: 'confirm_phone', component: confirmPhone, meta: { requiresSignIn: true } },
+    { path: '/confirm_phone', name: 'confirm_phone', component: confirmPhone, meta: { requiresSignIn: false } },
     { path: '/email/confirm/:token', name: 'confirm_email', component: confirmEmail, meta: { requiresSignIn: false } },
     { path: '/save_key', name: 'save_key', component: saveKey, meta: { requiresSignIn: true } },
     { path: '/phone/success', name: 'success_phone', component: successPhone, meta: { requiresSignIn: true } },
