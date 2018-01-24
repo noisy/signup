@@ -34,13 +34,13 @@ export default {
         authenticate(provider) {
             this.$store.dispatch('authenticate', { provider })
             .then(response => {
-                
+                console.log(response)
                 if(response.status !== 200) {
                     this.$notify({ group: 'main', text: response.message, type:'error' })
                     return this.$router.push('/')
                 }
                 let user = response.data.user
-                if(user.has_created_acc) { return this.$router.push('/') }
+                if(user.has_created_account) { this.$notify({ group: 'main', text: 'This social account has already been used to create an account', type:'error' }); return this.$router.push('/') }
                 if((user.social_verified || user.sms_verified) && user.email_verified) { this.$router.push('/pick_account') }
                 else if(!user.email_verified) { this.$router.push('/verify_mail') }
                 else { this.$router.push('/verify_phone') }
