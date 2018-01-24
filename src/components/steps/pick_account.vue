@@ -4,10 +4,10 @@
         <div class="PickAccount">
           <loadingbar class="loadingbar"/>
           <h1>Welcome to Utopian.io</h1>
-          <p>Your account name is how you will be known on Utopian.io</p>
+          <p>Your account name is how you will be known on Utopian.io (Important: You are not able to change the name afterwards)</p>
           <div class="PickAccount__Input">
             <input class="Input__utopian" style="margin-right:10px;" placeholder="Enter your username" v-model="input_account"></input>
-            <button class="Btn__blue" :disabled="!chosenAccountName" @click="createAccount()">CONTINUE</button>
+            <button class="Btn__blue" :disabled="false" @click="chooseAccount()">CONTINUE</button>
           </div>
           <div style="height:24px;width:100%;"><p class="text__error" v-show="this.input_error">{{input_error}}</p></div>
         </div>
@@ -28,7 +28,7 @@ export default {
   },
   watch: {
     input_account: function() {
-      this.getAccount()
+      this.validateAccountName()
     },
 
   },
@@ -42,30 +42,41 @@ export default {
     }
   },
   methods: {
-    createAccount() {
-      // create account
-      this.$router.push('/save_key')
+    chooseAccount() {
+      if(this.validateAccountName()) return
+      this.$store.dispatch('createPassword')
+        .then(this.$router.push('/save_key'))
     },
-    getAccount() {
-      if(this.input_account.length > 0 && this.input_account.length <= 2) {
-         this.input_error = 'Account name should be longer.'
-         this.$store.commit('setChosenAccName', { name: '' })
-         return
-      }
-      if(this.input_account.length <= 0) {
-        this.input_error = ''
+    validateAccountName() {
+      let validation = this.validationRules(this.input_account)
+      if(validation) {
         this.$store.commit('setChosenAccName', { name: '' })
-        return
-      } else {
-        this.input_error = ''
-      }
+        return  this.input_error = validation
+      } else { this.input_error = '' }
 
       this.$store.dispatch('getAccount', { account: this.input_account })
-      .then(account => {
-        this.input_error = account ? 'Account name not available' : ''
-      })
-      
-      
+        .then(account => { this.input_error = account ? 'Account name not available' : '' })
+        console.log(this.input_error)
+        return this.input_error
+    },
+    validationRules(value) {
+      let i, label, len, suffix;
+      suffix = "Account name should "
+      if (!value) return suffix + "not be empty."
+      let length = value.length
+      if (length < 3) return suffix + "be longer."
+      if (length > 16) return suffix + "be shorter."
+      if (/\./.test(value)) suffix = "Each account segment should "
+      let ref = value.split(".");
+      for (i = 0, len = ref.length; i < len; i++) {
+        label = ref[i];
+        if (!/^[a-z]/.test(label)) return suffix + "start with a letter."
+        if (!/^[a-z0-9-]*$/.test(label)) return suffix + "have only letters, digits, or dashes."
+        if (/--/.test(label)) return suffix + "have only one dash in a row."
+        if (!/[a-z0-9]$/.test(label)) return suffix + "end with a letter or digit."
+        if (!(label.length >= 3)) return suffix + "be longer"
+      }
+      return ''
     }
   }
 }

@@ -4,13 +4,16 @@
         <div class="SaveKey__container">
           <loadingbar class="loadingbar"/>
             <h1>Your password key</h1>
-              <p>Make sure to save your password key in a local safe and private. This key is not recoverable.</p>
+              <p>Make sure to save your password key - in a save and private area! It is not recoverable.</p>
                 <div style="margin-bottom:30px;"  class="PickAccount__Input">
-                  <img src="./../../assets/ic_key.svg"><div class="Box__key" placeholder="Enter your username"></div>
+                  <img src="./../../assets/ic_key.svg"><div class="Box__key" placeholder="">{{ this.generatedPassword }}</div>
                 </div>
+                <p v-if="created_account" style="margin-bottom:5px;">Congratulations - your Account has been created!</p>
+                <p v-if="created_account" style="margin-bottom:25px;">Make sure that you have saved your password and then click on login. (the password will be flushed from this site as soon as you click on login)</p>
                 <div class="SaveKey__footer">
-                  <button class="Btn__blue Btn__save" @click="saveKey()"><img src="./../../assets/ic_download.svg">SAVE</button>
-                  <a href="https://v2.steemconnect.com/oauth2/authorize?client_id=utopian.app&response_type=code&redirect_uri=https%3A%2F%2Futopian.io%2Fcallback&scope=vote,comment,comment_delete,comment_options,custom_json,claim_reward_balance,offline" v-show="saved_key" to="login" class="Login__text">LOGIN</a>
+                  <button v-if="!saved_key && !created_account" class="Btn__blue Btn__save" style="width:140px" @click="saveKey()"> Saved Password!</button>
+                  <button v-if="saved_key && !created_account" class="Btn__blue Btn__save" style="width:140px" :disabled="this.getting_created" @click="createAccount()">Create Account</button>
+                  <button v-if="created_account" class="Btn__blue Btn__save" @click="login()">Login</button>
                 </div>
             </div>
       </div>
@@ -23,7 +26,8 @@ import { mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapGetters([
-      'chosenAccountName'
+      'chosenAccountName',
+      'generatedPassword'
     ])
   },
   watch: {
@@ -38,13 +42,46 @@ export default {
   data() {
     return {
       saved_key: false,
+      created_account: false,
       input_account: '',
-      input_error: ''
+      input_error: '',
+      getting_created: false
     }
   },
   methods: {
+    login() {
+      if(confirm(`Did you save your password?`)) {
+          this.$store.commit('setGeneratedPassword', { password: '' })
+          this.$store.dispatch('login')
+      }
+    },
     saveKey() {
+      this.download()
       this.saved_key = true
+    },
+    createAccount() {
+      this.getting_created = true
+      this.$store.dispatch('createAccount')
+      .then(response => {
+        if(response.status === 200) {
+          this.$notify({ group: 'main', text: response.data ? response.data.message : response.message, type:'success' })
+          this.created_account = true
+        } else {
+          this.$notify({ group: 'main', text: response.data ? response.data.message : response.message, type:'error' })
+          this.getting_created = false
+        }
+      })
+    },
+    download(filename, text) {
+      let element = document.createElement('a')
+      let info = 'Please make sure that you save this password and delete the file afterwards. We advise writing it down on several pieces of papers and storing it in a secure place and/or using a password-safe application.'
+      let password = `\r\n\r\nPassword: ${this.generatedPassword}`
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(info + password))
+      element.setAttribute('download', 'utopian_pass')
+      element.style.display = 'none'
+      document.body.appendChild(element)
+      element.click()
+      document.body.removeChild(element)
     }
   }
 }
@@ -74,13 +111,17 @@ export default {
 }
 
 .PickAccount__Input img {
-  padding: 0 15px;
+  padding: 0 5px;
 }
 
 .Box__key {
   height: 55.44px;
   width: 336px;
   border-left: 1px solid #E0E2E5;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  padding-left: 5px;
 }
 
 .Input__utopian {

@@ -28,9 +28,9 @@ const router = new Router({
     { path: '/verify_mail', name: 'verify_mail', component: verifyMail, meta: { requiresSignIn: true }},
     { path: '/verify_phone', name: 'verify_phone', component: verifyPhone, meta: { requiresSignIn: true }},
     { path: '/email/success', name: 'success_email', component: successEmail, meta: { requiresSignIn: true } },
-    { path: '/confirm_phone', name: 'confirm_phone', component: confirmPhone, meta: { requiresSignIn: false } },
+    { path: '/confirm_phone', name: 'confirm_phone', component: confirmPhone, meta: { requiresSignIn: true } },
     { path: '/email/confirm/:token', name: 'confirm_email', component: confirmEmail, meta: { requiresSignIn: false } },
-    { path: '/save_key', name: 'save_key', component: saveKey, meta: { requiresSignIn: true } },
+    { path: '/save_key', name: 'save_key', component: saveKey, meta: { requiresSignIn: true, requiresAccountName: true } },
     { path: '/phone/success', name: 'success_phone', component: successPhone, meta: { requiresSignIn: true } },
     { path: '/auth/callback', name: 'signin_callback', component: signInCallback },
     { path: '/callback/login', name: 'login_callback', component: loginCallback },
@@ -40,9 +40,14 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresSignIn)) {
-    if (!store.getters.currentUserObject.social_name && !store.getters.loggingIn) { next({path: '/'}) } 
+    let chosen_acc_name = true
+    if(to.matched.some(record => record.meta.requiresAccountName)) {
+      chosen_acc_name = store.getters.chosen_account_name != ''
+    }
+    if (!store.getters.currentUserObject.social_name && !store.getters.loggingIn && chosen_acc_name) { next({path: '/'}) } 
     else { next() }
-  } else { next() }
+  }
+  else { next() }
 })
 
 export default router
