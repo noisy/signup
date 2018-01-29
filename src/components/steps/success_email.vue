@@ -33,11 +33,9 @@ export default {
       resendMail() {
           this.$store.dispatch('requestMail', { email: this.$store.state.chosen_email })
           .then(response => {
-            
-          })
-          .catch(response => {
             this.$notify({ group: 'main', text: response.data.message, type:'error' })
           })
+          .catch(response => { this.$notify({ group: 'main', text: response.data.message, type:'error' }) })
       }
   }
 }
