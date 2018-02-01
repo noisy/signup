@@ -1,27 +1,27 @@
 <template>
-<div class="Box__container">
-      <div class="Box__inner">
-        <div class="SaveKey__container">
-          <loadingbar class="loadingbar"/>
-            <h1>Your password key</h1>
-              <p>Make sure to save your password key - in a save and private area! It is not recoverable.</p>
-                <div style="margin-bottom:30px;"  class="PickAccount__Input">
-                  <img src="./../../assets/ic_key.svg"><div class="Box__key" placeholder="">{{ this.generatedPassword }}</div>
-                </div>
-                <p v-if="created_account" style="margin-bottom:5px;">Congratulations - your Account has been created!</p>
-                <p v-if="created_account" style="margin-bottom:25px;">Make sure that you have saved your password and then click on login. (the password will be flushed from this site as soon as you click on login)</p>
-                <div class="SaveKey__footer">
-                  <button v-if="!saved_key && !created_account" class="Btn__blue Btn__save" style="width:140px" @click="saveKey()"> Saved Password!</button>
-                  <button v-if="saved_key && !created_account" class="Btn__blue Btn__save" style="width:140px" :disabled="this.getting_created" @click="createAccount()">Create Account</button>
-                  <button v-if="created_account" class="Btn__blue Btn__save" @click="login()">Login</button>
-                </div>
-            </div>
+  <div class="Box__container">
+    <div class="Box__inner">
+      <div class="SaveKey__container">
+        <loadingbar class="loadingbar"/>
+        <h1>Your password key</h1>
+        <p>Make sure to save your password key - in a save and private area! It is not recoverable.</p>
+        <div style="margin-bottom:30px;"  class="PickAccount__Input">
+          <img src="./../../../assets/ic_key.svg"><div class="Box__key" placeholder="">{{ this.generatedPassword }}</div>
+        </div>
+        <p v-if="created_account" style="margin-bottom:5px;">Congratulations - your Account has been created!</p>
+        <p v-if="created_account" style="margin-bottom:25px;">Make sure that you have saved your password and then click on login. (the password will be flushed from this site as soon as you click on login)</p>
+        <div class="SaveKey__footer">
+          <button v-if="!saved_key && !created_account" class="Btn__blue Btn__save" style="width:140px" @click="saveKey()"> Saved Password!</button>
+          <button v-if="saved_key && !created_account" class="Btn__blue Btn__save" style="width:140px" :disabled="this.getting_created" @click="createAccount()">Create Account</button>
+          <button v-if="created_account" class="Btn__blue Btn__save" @click="login()">Login</button>
+        </div>
       </div>
+    </div>
   </div>
 </template>
 
 <script>
-import loadingbar from './../partials/loading_bars/loading_bar_end.vue'
+import loadingbar from './../../partials/loading_bars/loading_bar_end.vue'
 import { mapGetters } from 'vuex'
 export default {
   computed: {
@@ -64,6 +64,7 @@ export default {
       this.$store.dispatch('createAccount')
       .then(response => {
         if(response.status === 200) {
+          this.$cookies.set('c_a', true, Infinity)
           this.$notify({ group: 'main', text: response.data ? response.data.message : response.message, type:'success' })
           this.created_account = true
         } else {

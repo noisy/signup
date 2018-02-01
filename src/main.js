@@ -3,7 +3,9 @@ import App from './App'
 import router from './router'
 import store from './store/store'
 import Notifications from 'vue-notification'
+import VueModal from 'vue-js-modal'
 
+Vue.use(VueModal, { dialog: true })
 Vue.use(Notifications)
 
 Vue.config.productionTip = true

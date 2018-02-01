@@ -131,6 +131,27 @@ a {
   line-height:16px;
 }
 
+.Btn__light {
+  height: 25.44px;
+	width: 70px;
+	border-radius: 2px;
+	background-color: rgb(87, 87, 87);
+	box-shadow: 0 4px 10px 0 rgba(129, 129, 129, 0.4);
+  font-size:12px;
+  line-height:16px;
+  cursor: pointer;
+}
+
+.Btn__light[disabled] {
+  opacity:0.5;
+  cursor: not-allowed;
+}
+
+.Btn__light:hover {
+  background-color: #757575;
+}
+
+
 .Btn__blue[disabled] {
   opacity:0.5;
   cursor: not-allowed;
@@ -153,6 +174,10 @@ a {
 
 input, button {
   outline: none;
+}
+
+.clickable_link {
+  cursor: pointer;
 }
 
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
