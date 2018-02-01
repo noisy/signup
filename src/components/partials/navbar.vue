@@ -3,7 +3,7 @@
       <div class="Navbar__inner">
           <div class="left" style="position: relative"><a class="Topnav__brand" href="/"><img id="MainLogo" src="../../assets/utopian-sole.png"></a>
       <span class="Topnav__container"><router-link to="/" class="Topnav__version"><span>&nbsp;&nbsp;</span>beta</router-link></span></div>
-      </div>
+    </div>
   </div>
 </template>
 
