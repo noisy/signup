@@ -1,8 +1,8 @@
 'use strict'
 module.exports = {
   NODE_ENV: '"production"',
-  ROOT_PATH: '"http://localhost:9090"', // CHANGE THIS
-  API_PATH: '"http://localhost:4040/api"', // CHANGE THIS
+  ROOT_PATH: '"http://signup.utopian.io"',
+  API_PATH: '"http://api.utopian.io"',
   FACEBOOK_CLIENT_ID: '"143658296421240"', // CHANGE THIS
   GITHUB_CLIENT_ID: '"5003a7b4e5a299216107"', // CHANGE THIS
   LINKEDIN_CLIENT_ID: '"779524szfvi142"' // CHANGE THIS
