@@ -83,8 +83,9 @@ const store = new Vuex.Store({
         },
         authenticate: async ({commit, state }, payload) => {
            let { provider } = payload
+           console.log('payload', payload)
            return vueAuth.authenticate(provider)
-                         .then(response => { commit('setCurrentUserObject', { object: response.data.user }); return response })
+                         .then(response => { console.log('auth resp', response); commit('setCurrentUserObject', { object: response.data.user }); return response })
                          .catch(err => { return err.response ? err.response : err })
         },
         requestMail: ({ commit, state }, payload) => {
