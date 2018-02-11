@@ -7,7 +7,7 @@
         <h1>Welcome to Utopian.io</h1>
         <p>Your account name is how you will be known on Utopian.io (Important: You are not able to change the name afterwards)</p>
         <div class="PickAccount__Input">
-          <input class="Input__utopian" style="margin-right:10px;" placeholder="Enter your username" v-model="input_account"></input>
+          <input class="Input__utopian" style="margin-right:10px;" placeholder="Enter your username" v-model="input_account"/>
           <button class="Btn__blue" :disabled="false" @click="show()">CONTINUE</button>
         </div>
         <div style="height:24px;width:100%;"><p class="text__error" v-show="this.input_error">{{input_error}}</p></div>
@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     chooseAccount() {
-    if(this.validateAccountName()) return
+    if(this.validationRules(this.input_account)) return
       this.$store.dispatch('createPassword')
         .then(this.$router.push('/save_key'))
     },
@@ -66,7 +66,7 @@ export default {
       if(validation) {
         this.$store.commit('setChosenAccName', { name: '' })
         return  this.input_error = validation
-      } else { this.input_error = '' }
+      } else { this.input_error = '' }  
 
       this.$store.dispatch('getAccount', { account: this.input_account })
         .then(account => { this.input_error = account ? 'Account name not available' : '' })
