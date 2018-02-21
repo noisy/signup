@@ -22,9 +22,9 @@ Vue.use(VueCookies)
 var vueAuth = VueAuthenticate.factory(Vue.prototype.$http, {
     baseUrl: process.env.API_PATH,
     providers: {
-        github: { clientId: process.env.GITHUB_CLIENT_ID, redirectUri: `${process.env.ROOT_PATH}/auth/callback`, scope: ['read:user','user:email','public_repo','read:org'] },
-        facebook: { clientId: process.env.FACEBOOK_CLIENT_ID, redirectUri: `${process.env.ROOT_PATH}/auth/callback` },
-        linkedin: { clientId: process.env.LINKEDIN_CLIENT_ID, redirectUri: `${process.env.ROOT_PATH}/auth/callback`  }
+        github: { clientId: process.env.GITHUB_CLIENT_ID, redirectUri: `${process.env.ROOT_PATH}/auth/callback`, scope: ['read:user','user:email','public_repo','read:org'] }
+        /*facebook: { clientId: process.env.FACEBOOK_CLIENT_ID, redirectUri: `${process.env.ROOT_PATH}/auth/callback` },
+        linkedin: { clientId: process.env.LINKEDIN_CLIENT_ID, redirectUri: `${process.env.ROOT_PATH}/auth/callback`  }*/
       }
 })
 

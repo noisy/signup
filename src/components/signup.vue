@@ -5,7 +5,7 @@
         <h1>Welcome to Utopian.io</h1>
         <p>A place where you can earn rewards by contributing to your favorite open source projects.</p>
         <div><button class="btn__signin" id="github" @click="authenticate('github')"><img src="./../assets/ic_github.svg"><span>SIGN IN WITH GITHUB</span></button></div>
-        <div><button class="btn__signin" id="facebook" @click="authenticate('facebook')"><img src="./../assets/ic_facebook.svg"><span>SIGN IN WITH FACEBOOK</span></button></div>
+        <!--<div><button class="btn__signin" id="facebook" @click="authenticate('facebook')"><img src="./../assets/ic_facebook.svg"><span>SIGN IN WITH FACEBOOK</span></button></div>-->
         <!--<div><button class="btn__signin" id="linkedin" @click="authenticate('linkedin')"><img src="./../assets/ic_linkedIn.svg"><span>SIGN IN WITH LINKEDIN</span></button></div>-->
         <!--<div><button class="btn__signin" id="email" @click="signIn('/verify_mail')"><img src="./../assets/ic_email.svg"><span>SIGN IN WITH EMAIL </span></button></div>-->
         <p style="margin-bottom:0">Accounts will be created on the TESTNET for now.</p>
@@ -32,7 +32,6 @@ export default {
     if(this.$cookies.get('c_a')) return  this.$notify({ group: 'main', text: 'You have already created an account through Utopian', type:'error' })
       this.$store.dispatch('authenticate', { provider })
       .then(response => {
-      console.log(response)
         if(response.status !== 200) {
           this.$notify({ group: 'main', text: response.message, type:'error' })
           return this.$router.push('/')
