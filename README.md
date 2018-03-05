@@ -1,4 +1,4 @@
-# utopian-registration
+# Utopian Signup Frontend
 
 https://signup.utopian.io
 
