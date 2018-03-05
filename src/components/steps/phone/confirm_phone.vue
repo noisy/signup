@@ -6,7 +6,7 @@
         <h1>Code confirmation</h1>
         <p>Thank you for providing your number. To continue please enter the SMS code we’ve sent you.</p>
         <div style="margin-bottom:10px;"  class="Code__Input">
-          <img src="./../../../assets/ic_phone.svg"><input class="Input__utopian" style="margin-right:10px;" placeholder="Confirmation code" v-model="input_code"></input>
+          <img src="./../../../assets/ic_phone.svg"><input class="Input__utopian" style="margin-right:10px;" placeholder="Confirmation code" v-model="input_code">
         </div>
         <p style="margin-bottom:10px;">Didn't receive the certification code? <button :disabled="clicked_resend" style="margin-left:10px;" class="Btn__light" @click="resendCode()">Resend</button></p>
         <p style="margin-bottom:10px;">Wrong number? <a class="clickable_link" @click="changeNumber()">Change Number</a></p>

@@ -8,7 +8,7 @@
         <!--<div><button class="btn__signin" id="facebook" @click="authenticate('facebook')"><img src="./../assets/ic_facebook.svg"><span>SIGN IN WITH FACEBOOK</span></button></div>-->
         <!--<div><button class="btn__signin" id="linkedin" @click="authenticate('linkedin')"><img src="./../assets/ic_linkedIn.svg"><span>SIGN IN WITH LINKEDIN</span></button></div>-->
         <!--<div><button class="btn__signin" id="email" @click="signIn('/verify_mail')"><img src="./../assets/ic_email.svg"><span>SIGN IN WITH EMAIL </span></button></div>-->
-        <p style="margin-bottom:0">Accounts will be created on the TESTNET for now.</p>
+        <!--<p style="margin-bottom:0">Accounts will be created on the TESTNET for now.</p>-->
       </div>
     </div>
     <Login/>

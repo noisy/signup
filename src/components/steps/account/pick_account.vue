@@ -1,16 +1,21 @@
 <template>
   <div class="Box__container">
     <v-dialog class="dialog_accept"/>
-    <div class="Box__inner">
+    <div style="height:230px;" class="Box__inner">
       <div class="PickAccount">
         <loadingbar class="loadingbar"/>
         <h1>Welcome to Utopian.io</h1>
-        <p>Your account name is how you will be known on Utopian.io (Important: You are not able to change the name afterwards)</p>
+        <p style="margin-bottom:15px;">Your account name is how you will be known on Utopian.io (Important: You are not able to change the name afterwards)</p>
         <div class="PickAccount__Input">
           <input class="Input__utopian" style="margin-right:10px;" placeholder="Enter your username" v-model="input_account"/>
-          <button class="Btn__blue" :disabled="false" @click="show()">CONTINUE</button>
+          <button class="Btn__blue" :disabled="false" @click="chooseAccount()">CONTINUE</button>
         </div>
-        <div style="height:24px;width:100%;"><p class="text__error" v-show="this.input_error">{{input_error}}</p></div>
+        <div class="Checkbox__container">
+          <p style="margin:0" class="text__grey">Terms of Service: </p>
+          <input v-model="accept_checked" class="Checkbox__utopian" type="checkbox">
+          <a style="font-size:14px; margin-left:5px;" href="https://utopian.io/tos" target="_blank">Read</a>
+        </div>
+        <div v-show="this.input_error" style="height:24px;width:100%;"><p class="text__error" v-show="this.input_error">{{input_error}}</p></div>
       </div>
     </div>
     <Login/>
@@ -38,29 +43,25 @@ export default {
   data() {
     return {
       input_account: '',
-      input_error: ''
+      input_error: '',
+      accept_checked: false
     }
   },
   methods: {
     chooseAccount() {
-    if(this.validationRules(this.input_account)) return
-      this.$store.dispatch('createPassword')
-        .then(this.$router.push('/save_key'))
+      if(this.validationRules(this.input_account)) return this.$notify({ group: 'main', text: `Invalid Name`, type:'error' })
+      if(!this.accept_checked) return this.$notify({ group: 'main', text: `Please accept the TOS`, type:'error' })
+      this.$store.dispatch('acceptModal', { type: 'tos' })
+      .then(response => {
+        if(response.status === 200) {
+          this.$store.dispatch('createPassword')
+          .then(this.$router.push('/save_key'))
+        }
+        else {
+          this.$notify({ group: 'main', text: response.data.message, type:'error' })
+        }
+      })
     },
-    show() {
-      if(this.$store.state.current_user_object.tos) {
-        if(this.$store.state.current_user_object.tos.accepted) return this.chooseAccount()
-      }
-      this.$modal.show('dialog', {
-        title: 'Terms of Services',
-        text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc',
-        buttons: [{ title: 'Accept', handler: () => {
-              this.$store.dispatch('acceptModal', { type: 'tos' })
-              .then(response => {
-                if(response.status === 200) { this.chooseAccount() }
-                else { this.$notify({ group: 'main', text: response.data.message, type:'error' }) }})}},
-                { title: 'Decline' }]})
-      },
     validateAccountName() {
       let validation = this.validationRules(this.input_account)
       if(validation) {
@@ -97,6 +98,11 @@ export default {
 </script>
 
 <style>
+.Checkbox__container {
+  display:flex;
+  align-items:center;
+  padding-top:5px;
+}
 
 .vue-dialog{
   overflow-y: auto !important;

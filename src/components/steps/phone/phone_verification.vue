@@ -6,11 +6,11 @@
         <h1>Almost there</h1>
         <p>We just need to verify your phone number and send you a quick text.</p>
         <div style="margin-bottom:2px;"  class="Code__Input">
-          <img src="./../../../assets/ic_earth.svg"><input class="Input__utopian" style="margin-right:10px; border: 1px solid #000000;" placeholder="Country-Code" v-model="input_country_code"></input>
+          <img src="./../../../assets/ic_earth.svg"><input class="Input__utopian" style="margin-right:10px; border: 1px solid #000000;" placeholder="Country-Code" v-model="input_country_code">
         </div>
         <a style="text-decoration:none;color:#4786FF;font-size:14px;text-align:left;" target="_blank" href="https://countrycode.org/">Country-Code List</a>
         <div style="margin-top:8px;margin-bottom:10px;"  class="PhoneVerif__Input">
-          <img src="./../../../assets/ic_phone.svg"><input class="Input__utopian" style="margin-right:10px;" placeholder="Phone number" v-model="input_phone_number"></input>
+          <img src="./../../../assets/ic_phone.svg"><input class="Input__utopian" style="margin-right:10px;" placeholder="Phone number" v-model="input_phone_number">
         </div>
         <p class="PhoneVerif__Input-text">Example: 123456789</p>
         <p class="PhoneVerif__Input-text">* Land lines cannot receive SMS messages</p>
@@ -18,7 +18,7 @@
         <div>
           <button style="margin-top:20px;" class="Btn__blue" :disabled="input_country_code.length < 2 || input_phone_number.length < 7" @click="sendPhone()">CONTINUE</button>
         </div>
-        <div style="height:24px;widht:100%;"><p class="text__error" v-show="this.input_error">{{input_error}}</p></div>
+        <div style="height:24px;width:100%;"><p class="text__error" v-show="this.input_error">{{input_error}}</p></div>
       </div>
     </div>
   </div>
