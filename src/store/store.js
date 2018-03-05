@@ -6,11 +6,6 @@ import axios from 'axios'
 import crypto from 'crypto'
 import VueCookies from 'vue-cookies'
 
-
-
-
-//import axios from 'axios'
-
 const steem = require('steem')
 const dsteem = require('dsteem')
 const client = new dsteem.Client('https://api.steemit.com')
