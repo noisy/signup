@@ -26,4 +26,4 @@ You can find these under the folder **config**
   LINKEDIN_CLIENT_ID: '"CLIENT_ID"'
 ```
 
-These have also coresponding ENV variables in api.utopian.io which have to be changed as well
+These have also corresponding ENV variables in api.utopian.io which have to be changed as well
