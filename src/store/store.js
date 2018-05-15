@@ -17,7 +17,7 @@ Vue.use(VueCookies)
 var vueAuth = VueAuthenticate.factory(Vue.prototype.$http, {
     baseUrl: process.env.API_PATH,
     providers: {
-        github: { clientId: process.env.GITHUB_CLIENT_ID, redirectUri: `${process.env.ROOT_PATH}/auth/callback`, scope: ['read:user','user:email','public_repo','read:org'] }
+        github: { clientId: process.env.GITHUB_CLIENT_ID, redirectUri: `${process.env.ROOT_PATH}/auth/callback`, scope: ['read:user','user:email'] }
         /*facebook: { clientId: process.env.FACEBOOK_CLIENT_ID, redirectUri: `${process.env.ROOT_PATH}/auth/callback` },
         linkedin: { clientId: process.env.LINKEDIN_CLIENT_ID, redirectUri: `${process.env.ROOT_PATH}/auth/callback`  }*/
       }
@@ -114,7 +114,7 @@ const store = new Vuex.Store({
                          .catch(err => { console.log(err);return err.response ? err.response : err })
         },
         login: ({ commit, state }, payload) => {
-          let url = "https://v2.steemconnect.com/oauth2/authorize?client_id=utopian.app&response_type=code&redirect_uri=https%3A%2F%2Futopian.io%2Fcallback&scope=vote,comment,comment_delete,comment_options,custom_json,claim_reward_balance,offline"
+          let url = "https://join.utopian.io"
           window.location.href = url
         }
     },

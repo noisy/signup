@@ -9,11 +9,11 @@
           <img src="./../../../assets/ic_key.svg"><div class="Box__key" placeholder="">{{ this.generatedPassword }}</div>
         </div>
         <p v-if="created_account" style="margin-bottom:5px;">Congratulations - your Account has been created!</p>
-        <p v-if="created_account" style="margin-bottom:25px;">Make sure that you have saved your password and then click on login. (the password will be flushed from this site as soon as you click on login)</p>
+        <p v-if="created_account" style="margin-bottom:25px;">Make sure that you have saved your password and then click on proceed. (the password will be flushed from this site as soon as you click on proceed)</p>
         <div class="SaveKey__footer">
           <button v-if="!saved_key && !created_account" class="Btn__blue Btn__save" style="width:140px" @click="saveKey()"> Saved Password!</button>
           <button v-if="saved_key && !created_account" class="Btn__blue Btn__save" style="width:140px" :disabled="this.getting_created" @click="createAccount()">Create Account</button>
-          <button v-if="created_account" class="Btn__blue Btn__save" @click="login()">Login</button>
+          <button v-if="created_account" class="Btn__blue Btn__save" @click="login()">Proceed</button>
         </div>
       </div>
     </div>
@@ -157,7 +157,7 @@ export default {
 }
 
 .Btn__save:before {
-  
+
 }
 
 </style>

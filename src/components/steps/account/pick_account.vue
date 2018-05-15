@@ -13,7 +13,7 @@
         <div class="Checkbox__container">
           <p style="margin:0" class="text__grey">Terms of Service: </p>
           <input v-model="accept_checked" class="Checkbox__utopian" type="checkbox">
-          <a style="font-size:14px; margin-left:5px;" href="https://utopian.io/tos" target="_blank">Read</a>
+          <a style="font-size:14px; margin-left:5px;" href="https://join.utopian.io/tos" target="_blank">Read</a>
         </div>
         <div v-show="this.input_error" style="height:24px;width:100%;"><p class="text__error" v-show="this.input_error">{{input_error}}</p></div>
       </div>
@@ -67,7 +67,7 @@ export default {
       if(validation) {
         this.$store.commit('setChosenAccName', { name: '' })
         return  this.input_error = validation
-      } else { this.input_error = '' }  
+      } else { this.input_error = '' }
 
       this.$store.dispatch('getAccount', { account: this.input_account })
         .then(account => { this.input_error = account ? 'Account name not available' : '' })
@@ -120,12 +120,12 @@ export default {
 
 .PickAccount h1 {
     text-align: left;
-    
+
 }
 
 .PickAccount p {
     text-align: left;
-    
+
 }
 
 .PickAccount__Input {

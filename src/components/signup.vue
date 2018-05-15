@@ -3,8 +3,11 @@
     <div class="Box__inner">
       <div>
         <h1>Welcome to Utopian.io</h1>
-        <p>A place where you can earn rewards by contributing to your favorite open source projects.</p>
-        <div><button class="btn__signin" id="github" @click="authenticate('github')"><img src="./../assets/ic_github.svg"><span>SIGN IN WITH GITHUB</span></button></div>
+        <p>Create your STEEM account for free on Utopian.io to access your wallet and all the amazing STEEM platforms. <a href="https://join.utopian.io" target="_blank">Learn more!</a></p>
+        <div>
+          <button class="btn__signin" id="github" @click="authenticate('github')"><img src="./../assets/ic_github.svg"><span>SIGN IN WITH GITHUB</span></button>
+                  <small>The GitHub account linked to the Utopian services cannot be changed.</small>
+        </div>
         <!--<div><button class="btn__signin" id="facebook" @click="authenticate('facebook')"><img src="./../assets/ic_facebook.svg"><span>SIGN IN WITH FACEBOOK</span></button></div>-->
         <!--<div><button class="btn__signin" id="linkedin" @click="authenticate('linkedin')"><img src="./../assets/ic_linkedIn.svg"><span>SIGN IN WITH LINKEDIN</span></button></div>-->
         <!--<div><button class="btn__signin" id="email" @click="signIn('/verify_mail')"><img src="./../assets/ic_email.svg"><span>SIGN IN WITH EMAIL </span></button></div>-->
@@ -98,7 +101,7 @@ export default {
 .text__grey {
   text-align:center !important;
   color: #b1b2b5;
-  font-size:12px; 
+  font-size:12px;
 }
 
 #github {

@@ -12,7 +12,7 @@
           <div class="Checkbox__container">
             <p style="margin:0" class="text__grey">Privacy Agreement: </p>
             <input v-model="accept_checked" class="Checkbox__utopian" type="checkbox">
-            <a style="font-size:14px; margin-left:5px;" href="https://utopian.io/privacy" target="_blank">Read</a>
+            <a style="font-size:14px; margin-left:5px;" href="https://join.utopian.io/privacy" target="_blank">Read</a>
           </div>
           <div style="margin-top:10px;">
             <button class="Btn__blue" :disabled="!input_email || input_email.length < 5 || send_email" @click="check()">CONTINUE</button>
@@ -62,7 +62,7 @@ export default {
         }
       })
     },
-    verify_mail() {    
+    verify_mail() {
       this.$store.dispatch('checkCookie', { cookie_name: 'e_t', timeout: 180 })
       .then(result => {
         if(result) {
@@ -112,12 +112,12 @@ export default {
 
 .EmailVerif h1 {
     text-align: left;
-    
+
 }
 
 .EmailVerif p {
     text-align: left;
-    
+
 }
 
 .EmailVerif__Input {
