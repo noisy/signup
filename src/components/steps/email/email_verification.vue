@@ -5,7 +5,7 @@
         <div class="EmailVerif">
           <loadingbar class="loadingbar"/>
           <h1>Email Verification</h1>
-          <p>We need to know if your email match your social login to validate your account.</p>
+          <p>Please enter the email address to validate your account.</p>
           <div style="margin-bottom:10px;"  class="EmailVerif__Input">
             <img src="./../../../assets/ic_email.svg"><input class="Input__utopian" style="margin-right:10px;" placeholder="Enter your email" v-model="input_email">
           </div>

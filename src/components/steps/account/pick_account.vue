@@ -5,7 +5,7 @@
       <div class="PickAccount">
         <loadingbar class="loadingbar"/>
         <h1>Welcome to Utopian.io</h1>
-        <p style="margin-bottom:15px;">Your account name is how you will be known on Utopian.io (Important: You are not able to change the name afterwards)</p>
+        <p style="margin-bottom:15px;">Choose an account name to use on Utopian. Note that you cannot change your account name after selection.</p>
         <div class="PickAccount__Input">
           <input class="Input__utopian" style="margin-right:10px;" placeholder="Enter your username" v-model="input_account"/>
           <button class="Btn__blue" :disabled="false" @click="chooseAccount()">CONTINUE</button>

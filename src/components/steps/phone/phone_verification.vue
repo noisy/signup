@@ -4,7 +4,7 @@
       <div class="PhoneVerif">
         <loadingbar class="loadingbar"/>
         <h1>Almost there</h1>
-        <p>We just need to verify your phone number and send you a quick text.</p>
+        <p>Please enter your phone number to activate your account using an SMS text code.</p>
         <div style="margin-bottom:2px;"  class="Code__Input">
           <img src="./../../../assets/ic_earth.svg"><input class="Input__utopian" style="margin-right:10px; border: 1px solid #000000;" placeholder="Country-Code" v-model="input_country_code">
         </div>
@@ -92,12 +92,12 @@ export default {
 
 .PhoneVerif h1 {
     text-align: left;
-    
+
 }
 
 .PhoneVerif p {
     text-align: left;
-    
+
 }
 
 .PhoneVerif__Input, .Code__Input {

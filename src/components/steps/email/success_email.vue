@@ -3,8 +3,8 @@
     <div class="Box__inner">
       <div class="Success">
         <h1 style="padding-bottom:5px;">Email Confirmation</h1>
-        <p>You’re now only a few steps away from having your own Utopian Account.</p>
-        <p>Open the Email we've send you and click on the confirmation-link.</p>
+        <p>Just a few more steps... Check your email for a confirmation link.</p>
+        <p>Check your SPAM folder if the email is not in your inbox.</p>
         <div style="height:24px;width:100%;"><p class="text__error" v-show="this.input_error">{{input_error}}</p></div>
         <button :disabled="clicked_resend" class="Btn__blue" style="cursor:pointer" @click="resendMail()">Resend Email</button>
       </div>
