@@ -3,7 +3,7 @@
     <div class="Box__inner">
       <div>
         <h1>Welcome to Utopian.io</h1>
-        <p>Register with your GitHub account to get instant access to Utopian services and a free STEEM account and wallet. Learn More About STEEM. <a href="https://join.utopian.io" target="_blank">Learn More About Utopian</a></p>
+        <p>Register with your GitHub account to get instant access to Utopian services and a free STEEM account and wallet. <a href="https://join.utopian.io" target="_blank">Learn More About Utopian</a></p>
         <div>
           <button class="btn__signin" id="github" @click="authenticate('github')"><img src="./../assets/ic_github.svg"><span>SIGN IN WITH GITHUB</span></button>
                   <small>The GitHub account linked to the Utopian services cannot be changed.</small>
