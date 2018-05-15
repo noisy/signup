@@ -8,6 +8,7 @@ yarn-error.log*
 .env
 ./config
 ./config/*
+/config/
 
 # Editor directories and files
 .idea

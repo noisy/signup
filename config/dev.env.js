@@ -8,5 +8,5 @@ module.exports = merge(prodEnv, {
   API_PATH: '"http://localhost:4040/api"',
   FACEBOOK_CLIENT_ID: '""', // CHANGE THIS
   GITHUB_CLIENT_ID: '"4ec1203397f6f27694bd"', // CHANGE THIS
-  LINKEDIN_CLIENT_ID: '"779524szfvi142"' // CHANGE THIS
+  LINKEDIN_CLIENT_ID: '""' // CHANGE THIS
 })
