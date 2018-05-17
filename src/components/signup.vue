@@ -6,11 +6,10 @@
         <p>Register with your GitHub account to get instant access to Utopian services and a free STEEM account and wallet. <a href="https://join.utopian.io" target="_blank">Learn More About Utopian</a></p>
         <div>
           <vue-recaptcha 
-            ref="recaptcha"
             @verify="onCaptchaVerified"
             @expired="onCaptchaExpired"
-            sitekey="6LcavVkUAAAAAKl5cJB-zQG8eW_qge_JyTWE3STx">
-            <button class="btn__signin" id="github" @click="authenticateV2('github')"><img src="./../assets/ic_github.svg"><span>SIGN IN WITH GITHUB</span></button>
+            sitekey="6Ld06lkUAAAAAGTusc2d373DU6PvotibJ6ilxpqX">
+            <button class="btn__signin" id="github"><img src="./../assets/ic_github.svg"><span>SIGN IN WITH GITHUB</span></button>
           </vue-recaptcha>
           <small>The GitHub account linked to the Utopian services cannot be changed.</small>
         </div>
@@ -48,7 +47,9 @@ export default {
   },
   methods: {
     signIn(to) { this.$router.push(to) },
-    
+    onCaptchaVerified() {
+      console.log('onCaptchaVerified')
+    },
     authenticate(provider) {
     if(this.$cookies.get('c_a')) return  this.$notify({ group: 'main', text: 'You have already created an account through Utopian', type:'error' })
       this.$store.dispatch('authenticate', { provider })
