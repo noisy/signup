@@ -5,13 +5,29 @@
         <h1>Welcome to Utopian.io</h1>
         <p>Register with your GitHub account to get instant access to Utopian services and a free STEEM account and wallet. <a href="https://join.utopian.io" target="_blank">Learn More About Utopian</a></p>
         <div>
-          <button class="btn__signin" id="github" @click="authenticate('github')"><img src="./../assets/ic_github.svg"><span>SIGN IN WITH GITHUB</span></button>
-                  <small>The GitHub account linked to the Utopian services cannot be changed.</small>
+          <vue-recaptcha 
+            ref="recaptcha"
+            @verify="onCaptchaVerified"
+            @expired="onCaptchaExpired"
+            sitekey="6LcavVkUAAAAAKl5cJB-zQG8eW_qge_JyTWE3STx">
+            <button class="btn__signin" id="github" @click="authenticateV2('github')"><img src="./../assets/ic_github.svg"><span>SIGN IN WITH GITHUB</span></button>
+          </vue-recaptcha>
+          <small>The GitHub account linked to the Utopian services cannot be changed.</small>
         </div>
         <!--<div><button class="btn__signin" id="facebook" @click="authenticate('facebook')"><img src="./../assets/ic_facebook.svg"><span>SIGN IN WITH FACEBOOK</span></button></div>-->
         <!--<div><button class="btn__signin" id="linkedin" @click="authenticate('linkedin')"><img src="./../assets/ic_linkedIn.svg"><span>SIGN IN WITH LINKEDIN</span></button></div>-->
         <!--<div><button class="btn__signin" id="email" @click="signIn('/verify_mail')"><img src="./../assets/ic_email.svg"><span>SIGN IN WITH EMAIL </span></button></div>-->
         <!--<p style="margin-bottom:0">Accounts will be created on the TESTNET for now.</p>-->
+          <div v-cloak class="">
+            <div v-show="serverError">
+              {{serverError}}
+            </div>
+          </div>
+          <div class="successful-server-response-wrapper" v-cloak>
+            <div v-show="sucessfulServerResponse" class="successful-server-response">
+              {{sucessfulServerResponse}}
+            </div>
+          </div>
       </div>
     </div>
     <Login/>
@@ -21,6 +37,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import VueRecaptcha from 'vue-recaptcha';
 import Login from './partials/login'
 export default {
   name: 'signup',
@@ -31,6 +48,7 @@ export default {
   },
   methods: {
     signIn(to) { this.$router.push(to) },
+    
     authenticate(provider) {
     if(this.$cookies.get('c_a')) return  this.$notify({ group: 'main', text: 'You have already created an account through Utopian', type:'error' })
       this.$store.dispatch('authenticate', { provider })
@@ -48,7 +66,8 @@ export default {
     }
   },
   components: {
-    Login
+    Login,
+    VueRecaptcha
   }
 }
 </script>
