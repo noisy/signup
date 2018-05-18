@@ -7,8 +7,8 @@
         <div>
           <vue-recaptcha
             ref="recaptcha"
-            @verify="onCaptchaVerified"
-            @expired="onCaptchaExpired"
+            @verify="onGithubCaptchaVerified"
+            @expired="onGithubCaptchaExpired"
             sitekey="6Ld06lkUAAAAAGTusc2d373DU6PvotibJ6ilxpqX">
             <button
               class="btn__signin"
@@ -53,32 +53,29 @@ export default {
   },
   methods: {
     signIn(to) { this.$router.push(to) },
-    onCaptchaVerified(recaptchaToken) {
-      console.log('onCaptchaVerified')
-      console.log(this)
-      console.log(recaptchaToken)
-
+    onGithubCaptchaVerified(recaptchaToken) {
       const self = this
       self.status = "submitting"
       self.$refs.recaptcha.reset()
+      self.authenticate('github')
     },
-    onCaptchaExpired: function () {
+    onGithubCaptchaExpired() {
       this.$refs.recaptcha.reset()
     },
     authenticate(provider) {
-    if(this.$cookies.get('c_a')) return  this.$notify({ group: 'main', text: 'You have already created an account through Utopian', type:'error' })
-      this.$store.dispatch('authenticate', { provider })
-      .then(response => {
-        if(response.status !== 200) {
-          this.$notify({ group: 'main', text: response.message, type:'error' })
-          return this.$router.push('/')
-        }
-        let user = response.data.user
-        if(user.has_created_account) { this.$notify({ group: 'main', text: 'This social account has already been used to create an account', type:'error' }); return this.$router.push('/') }
-        if((user.social_verified || user.sms_verified) && user.email_verified) { this.$router.push('/pick_account') }
-        else if(!user.email_verified) { this.$router.push('/verify_mail') }
-        else { this.$router.push('/verify_phone') }
-      })
+      if(this.$cookies.get('c_a')) return  this.$notify({ group: 'main', text: 'You have already created an account through Utopian', type:'error' })
+        this.$store.dispatch('authenticate', { provider })
+        .then(response => {
+          if(response.status !== 200) {
+            this.$notify({ group: 'main', text: response.message, type:'error' })
+            return this.$router.push('/')
+          }
+          let user = response.data.user
+          if(user.has_created_account) { this.$notify({ group: 'main', text: 'This social account has already been used to create an account', type:'error' }); return this.$router.push('/') }
+          if((user.social_verified || user.sms_verified) && user.email_verified) { this.$router.push('/pick_account') }
+          else if(!user.email_verified) { this.$router.push('/verify_mail') }
+          else { this.$router.push('/verify_phone') }
+        })
     }
   },
   components: {
