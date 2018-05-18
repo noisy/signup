@@ -5,11 +5,17 @@
         <h1>Welcome to Utopian.io</h1>
         <p>Register with your GitHub account to get instant access to Utopian services and a free STEEM account and wallet. <a href="https://join.utopian.io" target="_blank">Learn More About Utopian</a></p>
         <div>
-          <vue-recaptcha 
+          <vue-recaptcha
+            ref="recaptcha"
             @verify="onCaptchaVerified"
             @expired="onCaptchaExpired"
             sitekey="6Ld06lkUAAAAAGTusc2d373DU6PvotibJ6ilxpqX">
-            <button class="btn__signin" id="github"><img src="./../assets/ic_github.svg"><span>SIGN IN WITH GITHUB</span></button>
+            <button
+              class="btn__signin"
+              id="github"
+              :disabled="status==='submitting'">
+                <img src="./../assets/ic_github.svg"><span>SIGN IN WITH GITHUB</span>
+            </button>
           </vue-recaptcha>
           <small>The GitHub account linked to the Utopian services cannot be changed.</small>
         </div>
@@ -47,8 +53,17 @@ export default {
   },
   methods: {
     signIn(to) { this.$router.push(to) },
-    onCaptchaVerified() {
+    onCaptchaVerified(recaptchaToken) {
       console.log('onCaptchaVerified')
+      console.log(this)
+      console.log(recaptchaToken)
+
+      const self = this
+      self.status = "submitting"
+      self.$refs.recaptcha.reset()
+    },
+    onCaptchaExpired: function () {
+      this.$refs.recaptcha.reset()
     },
     authenticate(provider) {
     if(this.$cookies.get('c_a')) return  this.$notify({ group: 'main', text: 'You have already created an account through Utopian', type:'error' })
@@ -122,6 +137,11 @@ export default {
   text-align:center !important;
   color: #b1b2b5;
   font-size:12px;
+}
+
+.btn__signin[disabled] {
+  opacity:0.5;
+  cursor: not-allowed;
 }
 
 #github {
