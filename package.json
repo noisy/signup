@@ -2,7 +2,7 @@
   "name": "utopian-registration",
   "version": "1.0.0",
   "description": "social login for utopian",
-  "author": "therealwolf42 <therealwolfynator@gmail.com>",
+  "author": "Utopian Company SRLs <info@utopian.io>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
