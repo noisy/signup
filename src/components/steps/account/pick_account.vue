@@ -9,9 +9,9 @@
         <div class="PickAccount__Input">
           <input 
             class="Input__utopian"
-            v-bind:class="{ 'is-valid': !this.input_error && this.input_account, 'is-invalid': this.input_error }"
             style="margin-right:10px;" 
             placeholder="Enter your username"
+            v-bind:class="{ 'is-valid': !this.input_error && this.input_account, 'is-invalid': this.input_error }"
             v-model="input_account"/>
           <span
             class="valid-feedback feedback-icon"
@@ -44,6 +44,7 @@
 import loadingbar from './../../partials/loading_bars/loading_bar_start.vue'
 import Login from './../../partials/login'
 import { mapGetters } from 'vuex'
+
 export default {
   computed: {
     ...mapGetters([
@@ -52,10 +53,9 @@ export default {
   },
   watch: {
     input_account: function(input) {
-      console.log(input)
       this.input_account = input.toLowerCase().trim()
       this.validateAccountName()
-    },
+    }
   },
   components: {
     loadingbar
@@ -90,9 +90,10 @@ export default {
       } else { this.input_error = '' }
 
       this.$store.dispatch('getAccount', { account: this.input_account })
-        .then(account => { this.input_error = account ? 'Account name not available' : '' })
-        console.log(this.input_error)
-        return this.input_error
+        .then(account => {
+          this.input_error = account ? 'The username ' + this.input_account + ' is already in use' : ''
+        })
+      return this.input_error
     },
     validationRules(value) {
       let i, label, len, suffix;
