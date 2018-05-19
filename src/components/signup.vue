@@ -23,16 +23,6 @@
         <!--<div><button class="btn__signin" id="linkedin" @click="authenticate('linkedin')"><img src="./../assets/ic_linkedIn.svg"><span>SIGN IN WITH LINKEDIN</span></button></div>-->
         <!--<div><button class="btn__signin" id="email" @click="signIn('/verify_mail')"><img src="./../assets/ic_email.svg"><span>SIGN IN WITH EMAIL </span></button></div>-->
         <!--<p style="margin-bottom:0">Accounts will be created on the TESTNET for now.</p>-->
-          <div v-cloak class="">
-            <div v-show="serverError">
-              {{serverError}}
-            </div>
-          </div>
-          <div class="successful-server-response-wrapper" v-cloak>
-            <div v-show="sucessfulServerResponse" class="successful-server-response">
-              {{sucessfulServerResponse}}
-            </div>
-          </div>
       </div>
     </div>
     <Login/>
