@@ -12,20 +12,26 @@
             style="margin-right:10px;" 
             placeholder="Enter your username"
             v-bind:class="{ 'is-valid': !this.input_error && this.input_account, 'is-invalid': this.input_error }"
-            v-model="input_account"/>
+            v-model="input_account"
+            v-on:keypress="loading = true"/>
           <span
             class="valid-feedback feedback-icon"
-            v-if="this.input_account && this.input_error === ''">
+            v-if="this.loading && this.input_account">
+            <i class="fa fa-spinner fa-spin"></i>
+          </span>
+          <span
+            class="valid-feedback feedback-icon"
+            v-if="!this.loading && this.input_account && this.input_error === ''">
             <i class="fa fa-check" id="validIcon"></i>
           </span>
           <span
             class="invalid-feedback feedback-icon"
-            v-if="this.input_account && this.input_error !== ''">
+            v-if="!this.loading && this.input_account && this.input_error !== ''">
             <i class="fa fa-times"></i>
           </span>
           <button
             class="Btn__blue"
-            :disabled="this.input_error !== ''"
+            :disabled="this.loading || this.input_error !== ''"
             @click="chooseAccount()">CONTINUE</button>
         </div>
         <div v-show="this.input_error" style="height:24px;width:100%;"><p class="text__error" v-show="this.input_error">{{input_error}}</p></div>
@@ -44,6 +50,7 @@
 import loadingbar from './../../partials/loading_bars/loading_bar_start.vue'
 import Login from './../../partials/login'
 import { mapGetters } from 'vuex'
+import _ from 'lodash'
 
 export default {
   computed: {
@@ -52,10 +59,10 @@ export default {
     ])
   },
   watch: {
-    input_account: function(input) {
+    input_account: _.debounce(function(input) {
       this.input_account = input.toLowerCase().trim()
       this.validateAccountName()
-    }
+    }, 1000)
   },
   components: {
     loadingbar
@@ -64,7 +71,8 @@ export default {
     return {
       input_account: '',
       input_error: '',
-      accept_checked: false
+      accept_checked: false,
+      loading: false
     }
   },
   methods: {
@@ -86,12 +94,14 @@ export default {
       let validation = this.validationRules(this.input_account)
       if(validation) {
         this.$store.commit('setChosenAccName', { name: '' })
+        this.loading = false
         return  this.input_error = validation
       } else { this.input_error = '' }
 
       this.$store.dispatch('getAccount', { account: this.input_account })
         .then(account => {
           this.input_error = account ? 'The username ' + this.input_account + ' is already in use' : ''
+          this.loading = false
         })
       return this.input_error
     },
