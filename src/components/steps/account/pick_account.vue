@@ -16,17 +16,17 @@
             v-on:keypress="loading = true"/>
           <span
             class="valid-feedback feedback-icon"
-            v-if="this.loading && this.input_account">
+            v-show="this.loading && this.input_account">
             <i class="fa fa-spinner fa-spin"></i>
           </span>
           <span
             class="valid-feedback feedback-icon"
-            v-if="!this.loading && this.input_account && this.input_error === ''">
+            v-show="!this.loading && this.input_account && this.input_error === ''">
             <i class="fa fa-check" id="validIcon"></i>
           </span>
           <span
             class="invalid-feedback feedback-icon"
-            v-if="!this.loading && this.input_account && this.input_error !== ''">
+            v-show="!this.loading && this.input_account && this.input_error !== ''">
             <i class="fa fa-times"></i>
           </span>
           <button
@@ -34,7 +34,20 @@
             :disabled="this.loading || this.input_error !== ''"
             @click="chooseAccount()">CONTINUE</button>
         </div>
-        <div v-show="this.input_error" style="height:24px;width:100%;"><p class="text__error" v-show="this.input_error">{{input_error}}</p></div>
+        <div
+          v-show="this.input_error"
+          style="height:24px;width:100%;">
+          <p class="text__error"
+            v-show="this.input_error"
+            v-html="this.input_error"></p>
+        </div>
+        <div
+          v-show="this.success_msg"
+          style="height:24px;width:100%;">
+          <p class="text__success"
+            v-show="this.success_msg"
+            v-html="this.success_msg"></p>
+        </div>
         <div class="Checkbox__container">
           <p style="margin:0" class="text__grey">Terms of Service: </p>
           <input v-model="accept_checked" class="Checkbox__utopian" type="checkbox">
@@ -71,6 +84,7 @@ export default {
     return {
       input_account: '',
       input_error: '',
+      success_msg: '',
       accept_checked: false,
       loading: false
     }
@@ -100,8 +114,9 @@ export default {
 
       this.$store.dispatch('getAccount', { account: this.input_account })
         .then(account => {
-          this.input_error = account ? 'The username ' + this.input_account + ' is already in use' : ''
           this.loading = false
+          this.input_error = account ? 'The username <b>' + this.input_account + '</b> is already in use' : ''
+          this.success_msg = this.input_error ? '' : 'The username <b>' + this.input_account + '</b> is available'
         })
       return this.input_error
     },

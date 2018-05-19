@@ -166,6 +166,11 @@ a {
   font-size:14px !important;
 }
 
+.text__success {
+  color:#28a745 !important;
+  font-size:14px !important;
+}
+
 .text__grey {
     text-align:center !important;
     color: #b1b2b5;
