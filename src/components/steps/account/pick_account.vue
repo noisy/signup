@@ -9,18 +9,18 @@
         <div class="PickAccount__Input">
           <input 
             class="Input__utopian"
-            v-bind:class="{ available: !this.input_error && this.input_account, unavailable: this.input_error }"
+            v-bind:class="{ 'is-valid': !this.input_error && this.input_account, 'is-invalid': this.input_error }"
             style="margin-right:10px;" 
             placeholder="Enter your username"
             v-model="input_account"/>
           <span
-            class="valid-feedback feedback-icon">
-            v-bind:class="{ valid-check: this.input_account !== '' }"
+            class="valid-feedback feedback-icon"
+            v-if="this.input_account && this.input_error === ''">
             <i class="fa fa-check" id="validIcon"></i>
           </span>
           <span
-            class="invalid-feedback feedback-icon">
-            v-bind:class="{ valid-check: this.input_account !== '' }"
+            class="invalid-feedback feedback-icon"
+            v-if="this.input_account && this.input_error !== ''">
             <i class="fa fa-times"></i>
           </span>
           <button
@@ -28,12 +28,12 @@
             :disabled="this.input_error !== ''"
             @click="chooseAccount()">CONTINUE</button>
         </div>
+        <div v-show="this.input_error" style="height:24px;width:100%;"><p class="text__error" v-show="this.input_error">{{input_error}}</p></div>
         <div class="Checkbox__container">
           <p style="margin:0" class="text__grey">Terms of Service: </p>
           <input v-model="accept_checked" class="Checkbox__utopian" type="checkbox">
           <a style="font-size:14px; margin-left:5px;" href="https://join.utopian.io/tos" target="_blank">Read</a>
         </div>
-        <div v-show="this.input_error" style="height:24px;width:100%;"><p class="text__error" v-show="this.input_error">{{input_error}}</p></div>
       </div>
     </div>
     <Login/>
@@ -154,38 +154,31 @@ export default {
   justify-content: space-between;
 }
 
-.unavailable {
+.is-invalid {
   border-color: #dc3545;
 }
 
-.available {
+.is-valid {
   border-color: #28a745;
   box-shadow: 0 0 0 0.2rem rgba(40,167,69,.25)
 }
 
 .valid-feedback.feedback-icon,
 .invalid-feedback.feedback-icon {
-    position: relative;
-    bottom: 10px;
-    right: 35px;
-    margin-top: 17px;
+  position: absolute;
+  display: block;
+  width: auto;
+  margin-left: 210px;
+  margin-top: 0px;
 }
 
 .valid-feedback {
-  display: none;
-  width: 100%;
   margin-top: 0.25rem;
   font-size: 80%;
   color: #28a745;
 }
 
-.valid-check {
-  display: block;
-}
-
 .invalid-feedback {
-  display: none;
-  width: 100%;
   margin-top: 0.25rem;
   font-size: 80%;
   color: #dc3545;
