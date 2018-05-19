@@ -33,7 +33,9 @@ export default {
     ])
   },
   watch: {
-    input_account: function() {
+    input_account: function(input) {
+      console.log(input)
+      this.input_account = input.toLowerCase().trim()
       this.validateAccountName()
     },
   },
