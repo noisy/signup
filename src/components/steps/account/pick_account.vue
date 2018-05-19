@@ -7,8 +7,26 @@
         <h1>Welcome to Utopian.io</h1>
         <p style="margin-bottom:15px;">Choose an account name to use on Utopian. Note that you cannot change your account name after selection.</p>
         <div class="PickAccount__Input">
-          <input class="Input__utopian" style="margin-right:10px;" placeholder="Enter your username" v-model="input_account"/>
-          <button class="Btn__blue" :disabled="false" @click="chooseAccount()">CONTINUE</button>
+          <input 
+            class="Input__utopian"
+            v-bind:class="{ available: !this.input_error && this.input_account, unavailable: this.input_error }"
+            style="margin-right:10px;" 
+            placeholder="Enter your username"
+            v-model="input_account"/>
+          <span
+            class="valid-feedback feedback-icon">
+            v-bind:class="{ valid-check: this.input_account !== '' }"
+            <i class="fa fa-check" id="validIcon"></i>
+          </span>
+          <span
+            class="invalid-feedback feedback-icon">
+            v-bind:class="{ valid-check: this.input_account !== '' }"
+            <i class="fa fa-times"></i>
+          </span>
+          <button
+            class="Btn__blue"
+            :disabled="this.input_error !== ''"
+            @click="chooseAccount()">CONTINUE</button>
         </div>
         <div class="Checkbox__container">
           <p style="margin:0" class="text__grey">Terms of Service: </p>
@@ -134,6 +152,43 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.unavailable {
+  border-color: #dc3545;
+}
+
+.available {
+  border-color: #28a745;
+  box-shadow: 0 0 0 0.2rem rgba(40,167,69,.25)
+}
+
+.valid-feedback.feedback-icon,
+.invalid-feedback.feedback-icon {
+    position: relative;
+    bottom: 10px;
+    right: 35px;
+    margin-top: 17px;
+}
+
+.valid-feedback {
+  display: none;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #28a745;
+}
+
+.valid-check {
+  display: block;
+}
+
+.invalid-feedback {
+  display: none;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #dc3545;
 }
 
 </style>
