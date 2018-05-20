@@ -5,8 +5,19 @@
         <h1>Welcome to Utopian.io</h1>
         <p>Register with your GitHub account to get instant access to Utopian services and a free STEEM account and wallet. <a href="https://join.utopian.io" target="_blank">Learn More About Utopian</a></p>
         <div>
-          <button class="btn__signin" id="github" @click="authenticate('github')"><img src="./../assets/ic_github.svg"><span>SIGN IN WITH GITHUB</span></button>
-                  <small>The GitHub account linked to the Utopian services cannot be changed.</small>
+          <vue-recaptcha
+            ref="recaptcha"
+            @verify="onGithubCaptchaVerified"
+            @expired="onGithubCaptchaExpired"
+            sitekey="6Ld06lkUAAAAAGTusc2d373DU6PvotibJ6ilxpqX">
+            <button
+              class="btn__signin"
+              id="github"
+              :disabled="status==='submitting'">
+                <img src="./../assets/ic_github.svg"><span>SIGN IN WITH GITHUB</span>
+            </button>
+          </vue-recaptcha>
+          <small>The GitHub account linked to the Utopian services cannot be changed.</small>
         </div>
         <!--<div><button class="btn__signin" id="facebook" @click="authenticate('facebook')"><img src="./../assets/ic_facebook.svg"><span>SIGN IN WITH FACEBOOK</span></button></div>-->
         <!--<div><button class="btn__signin" id="linkedin" @click="authenticate('linkedin')"><img src="./../assets/ic_linkedIn.svg"><span>SIGN IN WITH LINKEDIN</span></button></div>-->
@@ -21,6 +32,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import VueRecaptcha from 'vue-recaptcha';
 import Login from './partials/login'
 export default {
   name: 'signup',
@@ -31,24 +43,34 @@ export default {
   },
   methods: {
     signIn(to) { this.$router.push(to) },
+    onGithubCaptchaVerified(recaptchaToken) {
+      const self = this
+      self.status = "submitting"
+      self.$refs.recaptcha.reset()
+      self.authenticate('github')
+    },
+    onGithubCaptchaExpired() {
+      this.$refs.recaptcha.reset()
+    },
     authenticate(provider) {
-    if(this.$cookies.get('c_a')) return  this.$notify({ group: 'main', text: 'You have already created an account through Utopian', type:'error' })
-      this.$store.dispatch('authenticate', { provider })
-      .then(response => {
-        if(response.status !== 200) {
-          this.$notify({ group: 'main', text: response.message, type:'error' })
-          return this.$router.push('/')
-        }
-        let user = response.data.user
-        if(user.has_created_account) { this.$notify({ group: 'main', text: 'This social account has already been used to create an account', type:'error' }); return this.$router.push('/') }
-        if((user.social_verified || user.sms_verified) && user.email_verified) { this.$router.push('/pick_account') }
-        else if(!user.email_verified) { this.$router.push('/verify_mail') }
-        else { this.$router.push('/verify_phone') }
-      })
+      if(this.$cookies.get('c_a')) return  this.$notify({ group: 'main', text: 'You have already created an account through Utopian', type:'error' })
+        this.$store.dispatch('authenticate', { provider })
+        .then(response => {
+          if(response.status !== 200) {
+            this.$notify({ group: 'main', text: response.message, type:'error' })
+            return this.$router.push('/')
+          }
+          let user = response.data.user
+          if(user.has_created_account) { this.$notify({ group: 'main', text: 'This social account has already been used to create an account', type:'error' }); return this.$router.push('/') }
+          if((user.social_verified || user.sms_verified) && user.email_verified) { this.$router.push('/pick_account') }
+          else if(!user.email_verified) { this.$router.push('/verify_mail') }
+          else { this.$router.push('/verify_phone') }
+        })
     }
   },
   components: {
-    Login
+    Login,
+    VueRecaptcha
   }
 }
 </script>
@@ -102,6 +124,11 @@ export default {
   text-align:center !important;
   color: #b1b2b5;
   font-size:12px;
+}
+
+.btn__signin[disabled] {
+  opacity:0.5;
+  cursor: not-allowed;
 }
 
 #github {
