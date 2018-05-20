@@ -9,7 +9,7 @@
             ref="recaptcha"
             @verify="onGithubCaptchaVerified"
             @expired="onGithubCaptchaExpired"
-            sitekey="6Ld06lkUAAAAAGTusc2d373DU6PvotibJ6ilxpqX">
+            sitekey="6LemTFoUAAAAALXAe6O-HyArFBFI6AqMScBkBkid">
             <button
               class="btn__signin"
               id="github"
