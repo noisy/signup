@@ -4,6 +4,6 @@ module.exports = {
   ROOT_PATH: '"https://signup.utopian.io"',
   API_PATH: '"https://api.utopian.io"',
   FACEBOOK_CLIENT_ID: '""', // CHANGE THIS
-  GITHUB_CLIENT_ID: '"4ec1203397f6f27694bd"', // CHANGE THIS
+  GITHUB_CLIENT_ID: '"dfd32cd4cc6b9272a126"', // CHANGE THIS
   LINKEDIN_CLIENT_ID: '""' // CHANGE THIS
 }
