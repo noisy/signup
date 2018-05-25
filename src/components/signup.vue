@@ -5,18 +5,19 @@
         <h1>Welcome to Utopian.io</h1>
         <p>Register with your GitHub account to get instant access to Utopian services and a free STEEM account and wallet. <a href="https://join.utopian.io" target="_blank">Learn More About Utopian</a></p>
         <div>
-          <vue-recaptcha
+          <!-- <vue-recaptcha
             ref="recaptcha"
             @verify="onGithubCaptchaVerified"
             @expired="onGithubCaptchaExpired"
-            sitekey="6LemTFoUAAAAALXAe6O-HyArFBFI6AqMScBkBkid">
+            sitekey="6LemTFoUAAAAALXAe6O-HyArFBFI6AqMScBkBkid"> -->
             <button
               class="btn__signin"
+              @click="onClick"
               id="github"
               :disabled="status==='submitting'">
                 <img src="./../assets/ic_github.svg"><span>SIGN IN WITH GITHUB</span>
             </button>
-          </vue-recaptcha>
+          <!-- </vue-recaptcha> -->
           <small>The GitHub account linked to the Utopian services cannot be changed.</small>
         </div>
         <!--<div><button class="btn__signin" id="facebook" @click="authenticate('facebook')"><img src="./../assets/ic_facebook.svg"><span>SIGN IN WITH FACEBOOK</span></button></div>-->
@@ -52,6 +53,11 @@ export default {
     onGithubCaptchaExpired() {
       this.$refs.recaptcha.reset()
     },
+    onClick() {
+      const self = this
+      self.status = "submitting"
+      self.authenticate('github')
+    },
     authenticate(provider) {
       if(this.$cookies.get('c_a')) return  this.$notify({ group: 'main', text: 'You have already created an account through Utopian', type:'error' })
         this.$store.dispatch('authenticate', { provider })
@@ -62,7 +68,8 @@ export default {
           }
           let user = response.data.user
           if(user.has_created_account) { this.$notify({ group: 'main', text: 'This social account has already been used to create an account', type:'error' }); return this.$router.push('/') }
-          if((user.social_verified || user.sms_verified) && user.email_verified) { this.$router.push('/pick_account') }
+          if(!user.social_verified && !user.sms_verified && !user.email_verified) { this.$router.push('/verify_invite') }
+          else if((user.social_verified || user.sms_verified) && user.email_verified) { this.$router.push('/pick_account') }
           else if(!user.email_verified) { this.$router.push('/verify_mail') }
           else { this.$router.push('/verify_phone') }
         })

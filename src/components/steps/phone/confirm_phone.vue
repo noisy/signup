@@ -57,7 +57,6 @@ export default {
       })
     },
       resendCode() {
-
         this.$store.dispatch('checkCookie', { cookie_name: 's_s', timeout: 60 * 10 })
         .then(result => {
           if(result) {
@@ -85,7 +84,7 @@ export default {
             .then(response => {
               if(response.status === 200) {
                 this.$store.dispatch('changeCookie', { cookie_name: 's_t', timeout: 60 })
-                this.$router.push('/pick_account')
+                this.$router.push('/phone/success')
               } else {
                 this.$notify({ group: 'main', text: response.data.message, type:'error' })
               }
