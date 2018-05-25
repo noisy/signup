@@ -5,19 +5,18 @@
         <h1>Welcome to Utopian.io</h1>
         <p>Register with your GitHub account to get instant access to Utopian services and a free STEEM account and wallet. <a href="https://join.utopian.io" target="_blank">Learn More About Utopian</a></p>
         <div>
-          <!-- <vue-recaptcha
+          <vue-recaptcha
             ref="recaptcha"
             @verify="onGithubCaptchaVerified"
             @expired="onGithubCaptchaExpired"
-            sitekey="6LemTFoUAAAAALXAe6O-HyArFBFI6AqMScBkBkid"> -->
+            sitekey="6LfSclsUAAAAAM2oMN7V8WwijAcCMdBLT2dUAJLj">
             <button
               class="btn__signin"
-              @click="onClick"
               id="github"
               :disabled="status==='submitting'">
                 <img src="./../assets/ic_github.svg"><span>SIGN IN WITH GITHUB</span>
             </button>
-          <!-- </vue-recaptcha> -->
+          </vue-recaptcha>
           <small>The GitHub account linked to the Utopian services cannot be changed.</small>
         </div>
         <!--<div><button class="btn__signin" id="facebook" @click="authenticate('facebook')"><img src="./../assets/ic_facebook.svg"><span>SIGN IN WITH FACEBOOK</span></button></div>-->
@@ -53,11 +52,6 @@ export default {
     onGithubCaptchaExpired() {
       this.$refs.recaptcha.reset()
     },
-    onClick() {
-      const self = this
-      self.status = "submitting"
-      self.authenticate('github')
-    },
     authenticate(provider) {
       if(this.$cookies.get('c_a')) return  this.$notify({ group: 'main', text: 'You have already created an account through Utopian', type:'error' })
         this.$store.dispatch('authenticate', { provider })
@@ -68,8 +62,7 @@ export default {
           }
           let user = response.data.user
           if(user.has_created_account) { this.$notify({ group: 'main', text: 'This social account has already been used to create an account', type:'error' }); return this.$router.push('/') }
-          if(!user.social_verified && !user.sms_verified && !user.email_verified) { this.$router.push('/verify_invite') }
-          else if((user.social_verified || user.sms_verified) && user.email_verified) { this.$router.push('/pick_account') }
+          if((user.social_verified || user.sms_verified) && user.email_verified) { this.$router.push('/pick_account') }
           else if(!user.email_verified) { this.$router.push('/verify_mail') }
           else { this.$router.push('/verify_phone') }
         })
@@ -83,7 +76,6 @@ export default {
 </script>
 
 <style>
-
 .Signup {
   padding:16px 25px 28px 25px;
   display: flex;
@@ -94,17 +86,14 @@ export default {
   border-radius: 2px;
   background-color: #FFFFFF;
 }
-
 .Signup h1 {
   text-align: left;
   margin:5px 0;
 }
-
 .Signup p {
   text-align: left;
   margin:5px 0 25px 0;
 }
-
 .btn__signin {
   height: 40px;
   width: 100%;
@@ -115,44 +104,36 @@ export default {
   cursor: pointer;
   outline: none;
 }
-
 .btn__signin span {
   margin-left:-10px;
 }
-
 .btn__signin img {
   height: 16px;
   width: 16px;
   float:left;
   padding-left:10px;
 }
-
 .text__grey {
   text-align:center !important;
   color: #b1b2b5;
   font-size:12px;
 }
-
 .btn__signin[disabled] {
   opacity:0.5;
   cursor: not-allowed;
 }
-
 #github {
   background-color: #24292E;
   box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2);
 }
-
 #facebook {
   background-color: #415DAE;
   box-shadow: 0 4px 10px 0 rgba(56,87,154,0.2);
 }
-
 #linkedin {
   background-color: #007EBB;
   box-shadow: 0 4px 10px 0 rgba(0,126,187,0.3);
 }
-
 #email {
   background-color: #8530c3;
   box-shadow: 0 4px 10px 0 rgba(0,126,187,0.3);
