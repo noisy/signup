@@ -12,7 +12,7 @@ export default {
         if(response.data.user.approved && response.data.user.approval_verified) {
 
           this.$router.push('/pick_account')
-        } else { this.$router.push('/rejected') }
+        } else { this.$router.push('/') }
       } else {
         this.$notify({ group: 'main', text: response.data.message, type:'error' })
         this.$router.push('/')
