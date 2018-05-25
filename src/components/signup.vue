@@ -62,7 +62,8 @@ export default {
           }
           let user = response.data.user
           if(user.has_created_account) { this.$notify({ group: 'main', text: 'This social account has already been used to create an account', type:'error' }); return this.$router.push('/') }
-          if((user.social_verified || user.sms_verified) && user.email_verified) { this.$router.push('/pick_account') }
+          if(!user.social_verified && !user.sms_verified && !user.email_verified) { this.$router.push('/verify_invite') }
+          else if((user.social_verified || user.sms_verified) && user.email_verified) { this.$router.push('/pick_account') }
           else if(!user.email_verified) { this.$router.push('/verify_mail') }
           else { this.$router.push('/verify_phone') }
         })
