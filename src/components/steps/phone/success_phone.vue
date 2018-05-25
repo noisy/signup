@@ -3,9 +3,8 @@
     <div class="Box__inner">     
       <div class="Success">
         <h1>Thanks for confirming your phone number!</h1>
-        <p>You’re a few steps away from getting to the top of the list. Check your email and click the email validation link.</p>
+        <p>You’re a few steps away from getting to the top of the list.</p>
         <p>After validating your sign up request with us we’ll look it over for approval. As soon as your turn is up and you’re approved, you’ll be sent a link to finalize your account!</p>
-        <div style="height:24px;widht:100%;"><p class="text__error" v-show="this.input_error">{{input_error}}</p></div>
       </div>
     </div>
   </div>
@@ -14,26 +13,13 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-  computed: {
-    ...mapGetters([
-    ])
-  },
-  watch: {
-    input_account: function() {
-      this.getAccount()
-    },
-  },
-  data() {
-    return {
-      input_country_code: '',
-      input_phone_number: '',
-      input_error: ''
-    }
-  },
-  methods: {
-    sendPhone() {
-      this.$router.push('/confirm_phone')
-    }
+  mounted() {
+    this.$store.dispatch('requestApproval')
+    .then(response => {
+      if(response.status !== 200) {
+        this.$notify({ group: 'main', text: 'We couldn\'t process your request. Please contact us on discord or support.utopian.io', type:'error' })
+      }
+    })
   }
 }
 </script>

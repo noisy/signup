@@ -93,6 +93,11 @@ const store = new Vuex.Store({
                         .then(response => { return response })
                         .catch(err => { return err.response ? err.response : err })
         },
+        confirmApproval: ({ commit, state}, payload) => {
+            return axios.post(`${process.env.API_PATH}/auth/approval/confirm`, { token: payload.token })
+                        .then(response => { return response })
+                        .catch(err => { return err.response ? err.response : err })
+        },
         requestPhone: ({ commit, state }, payload) => {
             return axios.post(`${process.env.API_PATH}/auth/phone/request`, { user_id: state.current_user_object._id, country_code: state.chosen_countrycode, phone_number: state.chosen_phonenumber })
                         .then(response => { return response })
@@ -108,8 +113,18 @@ const store = new Vuex.Store({
                          .then(response => { return response })
                          .catch(err => { console.log(err);return err.response ? err.response : err })
         },
+        confirmInviteCode: ({ commit, state }, payload) => {
+            return  axios.post(`${process.env.API_PATH}/auth/invite/confirm`, { user_id: state.current_user_object._id, code: state.invite_code })
+                         .then(response => { return response })
+                         .catch(err => { console.log(err);return err.response ? err.response : err })
+        },
         resetPendingPhone: ({ commit, state }, payload) => {
             return axios.post(`${process.env.API_PATH}/auth/phone/reset`, { user_id: state.current_user_object._id })
+                         .then(response => { return response })
+                         .catch(err => { console.log(err);return err.response ? err.response : err })
+        },
+        requestApproval: ({ commit, state }, payload) => {
+            return axios.post(`${process.env.API_PATH}/auth/approval/request`, { user_id: state.current_user_object._id })
                          .then(response => { return response })
                          .catch(err => { console.log(err);return err.response ? err.response : err })
         },
@@ -123,7 +138,8 @@ const store = new Vuex.Store({
         setChosenAccName: (state, { name }) => { Vue.set(state, 'chosen_account_name', name) },
         setChosenEmail: (state, { email }) => { Vue.set(state, 'chosen_email', email) },
         setGeneratedPassword: (state, { password }) => { Vue.set(state, 'generated_password', password) },
-        setPhoneNumber: (state, {country_code, phone_number}) => { Vue.set(state, 'chosen_countrycode', country_code); Vue.set(state, 'chosen_phonenumber', phone_number) }
+        setPhoneNumber: (state, {country_code, phone_number}) => { Vue.set(state, 'chosen_countrycode', country_code); Vue.set(state, 'chosen_phonenumber', phone_number) },
+        setInviteCode: (state, {invite_code}) => { Vue.set(state, 'invite_code', invite_code) }
     },
     getters: {
         currentUserObject: state => { return state.current_user_object },

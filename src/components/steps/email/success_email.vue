@@ -5,8 +5,8 @@
         <h1 style="padding-bottom:5px;">Email Confirmation</h1>
         <p>Just a few more steps... Check your email for a confirmation link.</p>
         <p>Check your SPAM folder if the email is not in your inbox.</p>
-        <div style="height:24px;width:100%;"><p class="text__error" v-show="this.input_error">{{input_error}}</p></div>
         <button :disabled="clicked_resend" class="Btn__blue" style="cursor:pointer" @click="resendMail()">Resend Email</button>
+        <div style="height:24px;width:100%;"><p class="text__error" v-show="this.input_error">{{input_error}}</p></div>
       </div>
     </div>
   </div>
@@ -62,7 +62,7 @@ export default {
 }
 
 .Success {
-  height:160px;
+  height:220px;
 }
 
 
