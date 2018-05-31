@@ -1,13 +1,19 @@
 <template>
-  <div id="app">
-    <navbar v-if="$route.name !== 'login'"></navbar>
-    <notifications style="margin-top:75px;" position="top center" group="main" />
-    <router-view/>
+  <div>
+    <Loader />
+    <div v-show="!isLoading" id="app">
+      <navbar v-if="$route.name !== 'login'"></navbar>
+      <notifications style="margin-top:75px;" position="top center" group="main" />
+      <router-view/>
+    </div>
   </div>
 </template>
 
 <script>
 import navbar from './components/partials/navbar.vue'
+import Loader from './components/partials/loader.vue'
+
+import { mapGetters } from 'vuex'
 export default {
   name: 'app',
   data() {
@@ -15,12 +21,14 @@ export default {
       current_route: ''
     }
   },
-  components: {
-    navbar
+  computed: {
+    ...mapGetters({
+      isLoading: 'loader/isLoading',
+    })
   },
-  mounted() {
-
-    
+  components: {
+    navbar,
+    Loader
   }
 }
 </script>

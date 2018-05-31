@@ -6,6 +6,8 @@ import axios from 'axios'
 import crypto from 'crypto'
 import VueCookies from 'vue-cookies'
 
+import loader from './modules/loader';
+
 const steem = require('steem')
 const dsteem = require('dsteem')
 const client = new dsteem.Client('https://api.steemit.com')
@@ -17,7 +19,12 @@ Vue.use(VueCookies)
 var vueAuth = VueAuthenticate.factory(Vue.prototype.$http, {
     baseUrl: process.env.API_PATH,
     providers: {
-        github: { clientId: process.env.GITHUB_CLIENT_ID, redirectUri: `${process.env.ROOT_PATH}/auth/callback`, scope: ['read:user','user:email'] }
+        github: {
+            clientId: process.env.GITHUB_CLIENT_ID,
+            redirectUri: `${process.env.ROOT_PATH}/auth/callback`,
+            scope: ['read:user','user:email'],
+            popupOptions: null
+        }
         /*facebook: { clientId: process.env.FACEBOOK_CLIENT_ID, redirectUri: `${process.env.ROOT_PATH}/auth/callback` },
         linkedin: { clientId: process.env.LINKEDIN_CLIENT_ID, redirectUri: `${process.env.ROOT_PATH}/auth/callback`  }*/
       }
@@ -34,7 +41,8 @@ const store = new Vuex.Store({
         generated_password: null,
         current_user_object: {},
         chosen_phonenumber: '',
-        chosen_countrycode: ''
+        chosen_countrycode: '',
+        loading: false,
     },
     actions: {
         checkCookie: ({ commit, state }, payload) => {
@@ -78,7 +86,6 @@ const store = new Vuex.Store({
         },
         authenticate: async ({commit, state }, payload) => {
            let { provider } = payload
-           console.log('payload', payload)
            return vueAuth.authenticate(provider)
                          .then(response => { console.log('auth resp', response); commit('setCurrentUserObject', { object: response.data.user }); return response })
                          .catch(err => { return err.response ? err.response : err })
@@ -131,6 +138,9 @@ const store = new Vuex.Store({
         login: ({ commit, state }, payload) => {
           let url = "https://join.utopian.io"
           window.location.href = url
+        },
+        setLoading({ commit }, status) {
+            commit('setLoading', status);
         }
     },
     mutations: {
@@ -139,14 +149,19 @@ const store = new Vuex.Store({
         setChosenEmail: (state, { email }) => { Vue.set(state, 'chosen_email', email) },
         setGeneratedPassword: (state, { password }) => { Vue.set(state, 'generated_password', password) },
         setPhoneNumber: (state, {country_code, phone_number}) => { Vue.set(state, 'chosen_countrycode', country_code); Vue.set(state, 'chosen_phonenumber', phone_number) },
-        setInviteCode: (state, {invite_code}) => { Vue.set(state, 'invite_code', invite_code) }
+        setInviteCode: (state, {invite_code}) => { Vue.set(state, 'invite_code', invite_code) },
+        setLoading: (state, status) => { Vue.set(state, 'loading', status) },
     },
     getters: {
-        currentUserObject: state => { return state.current_user_object },
-        isAuthenticated: state => { return vueAuth.isAuthenticated() },
-        chosenAccountName: state => { return state.chosen_account_name },
-        verificationRequired: state => { return state.verification_required },
-        generatedPassword: state => { return state.generated_password }
+        currentUserObject: state => state.current_user_object,
+        isAuthenticated: state => vueAuth.isAuthenticated(),
+        chosenAccountName: state => state.chosen_account_name,
+        verificationRequired: state => state.verification_required,
+        generatedPassword: state => state.generated_password,
+        isLoading: state => state.loading,
+    },
+    modules: {
+        loader
     }
 })
 
