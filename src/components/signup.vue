@@ -9,7 +9,7 @@
             ref="recaptcha"
             @verify="onGithubCaptchaVerified"
             @expired="onGithubCaptchaExpired"
-            sitekey="6LemTFoUAAAAALXAe6O-HyArFBFI6AqMScBkBkid">
+            :sitekey="recaptchaKey">
             <button
               class="btn__signin"
               id="github"
@@ -36,6 +36,11 @@ import VueRecaptcha from 'vue-recaptcha';
 import Login from './partials/login'
 export default {
   name: 'signup',
+  data() {
+    return {
+      recaptchaKey: process.env.RECAPTCHA_KEY
+    }
+  },
   computed: {
     ...mapGetters([
     "isAuthenticated"
@@ -62,10 +67,7 @@ export default {
           }
           let user = response.data.user
           if(user.has_created_account) { this.$notify({ group: 'main', text: 'This social account has already been used to create an account', type:'error' }); return this.$router.push('/') }
-          if(!user.social_verified && !user.sms_verified && !user.email_verified) { this.$router.push('/verify_invite') }
-          else if((user.social_verified || user.sms_verified) && user.email_verified) { this.$router.push('/pick_account') }
-          else if(!user.email_verified) { this.$router.push('/verify_mail') }
-          else { this.$router.push('/verify_phone') }
+          this.$router.push('/connect_account')
         })
     }
   },

@@ -8,5 +8,7 @@ module.exports = merge(prodEnv, {
   API_PATH: '"http://localhost:4040"',
   FACEBOOK_CLIENT_ID: '""', // CHANGE THIS
   GITHUB_CLIENT_ID: '"ebee24375a8e82388626"', // CHANGE THIS
+  RECAPTCHA_KEY: '"6LcScVwUAAAAAMmmBN84myrN2lgcpy22bnPcgUxD"',
+  STEEM_CONNECT_ID: '"utopian-icaro"',
   LINKEDIN_CLIENT_ID: '""' // CHANGE THIS
 })

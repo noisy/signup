@@ -135,6 +135,15 @@ const store = new Vuex.Store({
                          .then(response => { return response })
                          .catch(err => { console.log(err);return err.response ? err.response : err })
         },
+        createUserFromSteemAccount: ({ commit, state }, payload) => {
+            return axios.post(`${process.env.API_PATH}/users/create/steem`, {
+                user_id: payload.user_id,
+                access_token: payload.access_token,
+                steem_account: payload.steem_account,
+            })
+                .then(response => { return response })
+                .catch(err => { console.log(err);return err.response ? err.response : err })
+        },
         login: ({ commit, state }, payload) => {
           let url = "https://join.utopian.io"
           window.location.href = url

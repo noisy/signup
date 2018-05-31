@@ -19,6 +19,9 @@ import confirmPhone from '@/components/steps/phone/confirm_phone'
 import verifyPhone from '@/components/steps/phone/phone_verification'
 import successPhone from '@/components/steps/phone/success_phone'
 
+import connectAccount from '@/components/steps/connect/connect_account'
+import successConnect from '@/components/steps/connect/success_connect'
+
 import signInCallback from '@/components/callbacks/signin'
 import loginCallback from '@/components/callbacks/login'
 
@@ -39,6 +42,8 @@ const router = new Router({
     { path: '/approval/confirm/:token', name: 'confirm_approval', component: confirmApproval, meta: { requiresSignIn: false } },
     { path: '/save_key', name: 'save_key', component: saveKey, meta: { requiresSignIn: true, requiresAccountName: true } },
     { path: '/phone/success', name: 'success_phone', component: successPhone, meta: { requiresSignIn: true } },
+    { path: '/connect_account', name: 'connect_account', component: connectAccount, meta: { requiresSignIn: true } },
+    { path: '/success_connect', name: 'success_connect', component: successConnect },
     { path: '/auth/callback', name: 'signin_callback', component: signInCallback },
     { path: '/callback/login', name: 'login_callback', component: loginCallback },
     { path: '*', redirect: '/' }
