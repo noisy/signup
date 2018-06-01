@@ -7,7 +7,7 @@
       <div class="options">
         <button 
           class="Btn__blue" 
-          @click="noAccount()">I DON'T HAVE AN STEEM ACCOUNT</button>
+          @click="noAccount()">I DON'T HAVE A STEEM ACCOUNT</button>
         <button 
           class="Btn__blue" 
           @click="steemConnect()">CONNECT MY EXISTING STEEM ACCOUNT</button>
