@@ -47,9 +47,6 @@ import loadingbar from "./../../partials/loading_bars/loading_bar_1_3.vue";
 import { mapGetters } from "vuex";
 import Login from "./../../partials/login.vue";
 export default {
-  computed: {
-    ...mapGetters(["chosenAccountName"])
-  },
   components: {
     loadingbar,
     Login
@@ -61,6 +58,9 @@ export default {
       input_error: "",
       accept_checked: false
     };
+  },
+  computed: {
+    ...mapGetters(["chosenAccountName"])
   },
   methods: {
     check() {

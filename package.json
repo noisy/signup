@@ -10,7 +10,8 @@
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "test": "npm run unit",
     "build": "cross-env NODE_ENV=production node build/build.js",
-    "lint": "eslint --fix './src/**/*.{vue, js}'"
+    "lint": "eslint './src/**/*.{vue, js}'",
+    "lint-fix": "eslint --fix './src/**/*.{vue, js}'"
   },
   "dependencies": {
     "axios": "^0.17.1",

@@ -29,7 +29,7 @@
             @click="submitCode()">CONTINUE</button>
         </div>
         <div style="height:24px;width:100%;"><p 
-          v-show="this.input_error" 
+          v-show="input_error" 
           class="text__error">{{ input_error }}</p></div>
       </div>
     </div>
@@ -40,14 +40,6 @@
 import loadingbar from "./../../partials/loading_bars/loading_bar_3_3.vue";
 import { mapGetters } from "vuex";
 export default {
-  computed: {
-    ...mapGetters(["chosenAccountName"])
-  },
-  watch: {
-    input_account: function() {
-      this.getAccount();
-    }
-  },
   components: {
     loadingbar
   },
@@ -58,6 +50,14 @@ export default {
       input_code: "",
       input_error: ""
     };
+  },
+  computed: {
+    ...mapGetters(["chosenAccountName"])
+  },
+  watch: {
+    input_account: function() {
+      this.getAccount();
+    }
   },
   methods: {
     changeNumber() {

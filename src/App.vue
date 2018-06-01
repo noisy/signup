@@ -21,6 +21,10 @@ import Loader from "./components/partials/loader.vue";
 import { mapGetters } from "vuex";
 export default {
   name: "App",
+  components: {
+    navbar,
+    Loader
+  },
   data() {
     return {
       current_route: ""
@@ -30,10 +34,6 @@ export default {
     ...mapGetters({
       isLoading: "loader/isLoading"
     })
-  },
-  components: {
-    navbar,
-    Loader
   }
 };
 </script>

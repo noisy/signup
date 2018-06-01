@@ -10,7 +10,7 @@
           class="PickAccount__Input">
           <img src="./../../../assets/ic_key.svg"><div 
             class="Box__key" 
-            placeholder="">{{ this.generatedPassword }}</div>
+            placeholder="">{{ generatedPassword }}</div>
         </div>
         <p 
           v-if="created_account" 
@@ -26,7 +26,7 @@
             @click="saveKey()"> Saved Password!</button>
           <button 
             v-if="saved_key && !created_account" 
-            :disabled="this.getting_created" 
+            :disabled="getting_created" 
             class="Btn__blue Btn__save" 
             style="width:140px" 
             @click="createAccount()">Create Account</button>
@@ -44,14 +44,6 @@
 import loadingbar from "./../../partials/loading_bars/loading_bar_end.vue";
 import { mapGetters } from "vuex";
 export default {
-  computed: {
-    ...mapGetters(["chosenAccountName", "generatedPassword"])
-  },
-  watch: {
-    input_account: function() {
-      this.getAccount();
-    }
-  },
   components: {
     loadingbar
   },
@@ -63,6 +55,14 @@ export default {
       input_error: "",
       getting_created: false
     };
+  },
+  computed: {
+    ...mapGetters(["chosenAccountName", "generatedPassword"])
+  },
+  watch: {
+    input_account: function() {
+      this.getAccount();
+    }
   },
   methods: {
     login() {

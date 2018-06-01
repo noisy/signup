@@ -10,49 +10,49 @@
         <p style="margin-bottom:15px;">Choose an account name to use on Utopian. Note that you cannot change your account name after selection.</p>
         <div class="PickAccount__Input">
           <input 
-            :class="{ 'is-valid': !this.input_error && this.input_account, 'is-invalid': this.input_error }"
+            :class="{ 'is-valid': !input_error && input_account, 'is-invalid': input_error }"
             v-model="input_account" 
             class="Input__utopian"
             style="margin-right:10px;"
             placeholder="Enter your username"
             @keypress="loading = true">
           <span
-            v-show="this.loading && this.input_account"
+            v-show="loading && input_account"
             class="valid-feedback feedback-icon">
             <i class="fa fa-spinner fa-spin"/>
           </span>
           <span
-            v-show="!this.loading && this.input_account && this.input_error === ''"
+            v-show="!loading && input_account && input_error === ''"
             class="valid-feedback feedback-icon">
             <i 
               id="validIcon" 
               class="fa fa-check"/>
           </span>
           <span
-            v-show="!this.loading && this.input_account && this.input_error !== ''"
+            v-show="!loading && input_account && input_error !== ''"
             class="invalid-feedback feedback-icon">
             <i class="fa fa-times"/>
           </span>
           <button
-            :disabled="this.loading || this.input_error !== ''"
+            :disabled="loading || input_error !== ''"
             class="Btn__blue"
             @click="chooseAccount()">CONTINUE</button>
         </div>
         <div
-          v-show="this.input_error"
+          v-show="input_error"
           style="height:24px;width:100%;">
           <p 
-            v-show="this.input_error"
+            v-show="input_error"
             class="text__error"
-            v-html="this.input_error"/>
+            v-html="input_error"/>
         </div>
         <div
-          v-show="this.success_msg"
+          v-show="success_msg"
           style="height:24px;width:100%;">
           <p 
-            v-show="this.success_msg"
+            v-show="success_msg"
             class="text__success"
-            v-html="this.success_msg"/>
+            v-html="success_msg"/>
         </div>
         <div class="Checkbox__container">
           <p 
@@ -80,15 +80,6 @@ import { mapGetters } from "vuex";
 import _ from "lodash";
 
 export default {
-  computed: {
-    ...mapGetters(["chosenAccountName"])
-  },
-  watch: {
-    input_account: _.debounce(function(input) {
-      this.input_account = input.toLowerCase().trim();
-      this.validateAccountName();
-    }, 1000)
-  },
   components: {
     loadingbar
   },
@@ -100,6 +91,15 @@ export default {
       accept_checked: false,
       loading: false
     };
+  },
+  computed: {
+    ...mapGetters(["chosenAccountName"])
+  },
+  watch: {
+    input_account: _.debounce(function(input) {
+      this.input_account = input.toLowerCase().trim();
+      this.validateAccountName();
+    }, 1000)
   },
   methods: {
     chooseAccount() {

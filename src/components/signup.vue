@@ -38,6 +38,10 @@ import VueRecaptcha from "vue-recaptcha";
 import Login from "./partials/login";
 export default {
   name: "Signup",
+  components: {
+    Login,
+    VueRecaptcha
+  },
   data() {
     return {
       recaptchaKey: process.env.RECAPTCHA_KEY
@@ -50,7 +54,7 @@ export default {
     signIn(to) {
       this.$router.push(to);
     },
-    onGithubCaptchaVerified(recaptchaToken) {
+    onGithubCaptchaVerified() {
       const self = this;
       self.status = "submitting";
       self.$refs.recaptcha.reset();
@@ -88,10 +92,6 @@ export default {
         this.$router.push("/connect_account");
       });
     }
-  },
-  components: {
-    Login,
-    VueRecaptcha
   }
 };
 </script>

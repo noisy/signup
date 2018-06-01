@@ -11,7 +11,7 @@
           style="cursor:pointer" 
           @click="resendMail()">Resend Email</button>
         <div style="height:24px;width:100%;"><p 
-          v-show="this.input_error" 
+          v-show="input_error" 
           class="text__error">{{ input_error }}</p></div>
       </div>
     </div>
@@ -23,9 +23,6 @@ import loadingbar from "./../../partials/loading_bars/loading_bar_2_3.vue";
 import crypto from "crypto";
 import { mapGetters } from "vuex";
 export default {
-  computed: {
-    ...mapGetters(["chosenAccountName"])
-  },
   components: {
     loadingbar
   },
@@ -34,6 +31,9 @@ export default {
       clicked_resend: false,
       input_error: ""
     };
+  },
+  computed: {
+    ...mapGetters(["chosenAccountName"])
   },
   methods: {
     resendMail() {

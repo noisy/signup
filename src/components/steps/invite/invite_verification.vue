@@ -20,7 +20,7 @@
           @click="sendCode()">CONTINUE</button>
       </div>
       <div style="height:24px;width:100%;"><p 
-        v-show="this.input_error" 
+        v-show="input_error" 
         class="text__error">{{ input_error }}</p></div>
       <p style="text-align: center;margin-bottom:10px;"><a 
         class="clickable_link" 
