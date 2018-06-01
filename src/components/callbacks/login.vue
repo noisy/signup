@@ -1,15 +1,12 @@
-<template>
-  
-</template>
+<template/>
 
 <script>
 export default {
-    mounted() {
-        this.$router.push('/')
-    }
-}
+  mounted() {
+    this.$router.push("/");
+  }
+};
 </script>
 
 <style>
-
 </style>
