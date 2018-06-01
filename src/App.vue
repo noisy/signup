@@ -2,7 +2,6 @@
   <div>
     <Loader />
     <div 
-      v-show="!isLoading" 
       id="app">
       <navbar v-if="$route.name !== 'login'"/>
       <notifications 

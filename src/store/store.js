@@ -23,7 +23,7 @@ var vueAuth = VueAuthenticate.factory(Vue.prototype.$http, {
       clientId: process.env.GITHUB_CLIENT_ID,
       redirectUri: `${process.env.ROOT_PATH}/auth/callback`,
       scope: ['read:user', 'user:email'],
-      display: '',
+      popupOptions: null,
     }
     /*facebook: { clientId: process.env.FACEBOOK_CLIENT_ID, redirectUri: `${process.env.ROOT_PATH}/auth/callback` },
     linkedin: { clientId: process.env.LINKEDIN_CLIENT_ID, redirectUri: `${process.env.ROOT_PATH}/auth/callback`  }*/

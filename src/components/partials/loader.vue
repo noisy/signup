@@ -6,7 +6,7 @@
       class="spinner" 
       viewBox="0 0 24 24">
       <path 
-        fill="#fff" 
+        fill="#4786ff" 
         d="M12,4V2A10,10 0 0,0 2,12H4A8,8 0 0,1 12,4Z" />
     </svg>
   </div>
@@ -32,17 +32,20 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background: #24292e;
+  background-color: rgba(0, 0, 0, 0.4);
   z-index: 9999;
   text-align: center;
+  display: flex;
+  justify-content: center;
 }
 .spinner {
+  align-self: center;
   animation-name: spin;
   animation-duration: 1s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
-  width: 24px;
-  height: 24px;
+  width: 50px;
+  height: 50px;
   margin: 15px;
 }
 
