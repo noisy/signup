@@ -11,29 +11,31 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 export default {
   mounted() {
-    this.$store.dispatch('requestApproval')
-    .then(response => {
-      if(response.status !== 200) {
-        this.$notify({ group: 'main', text: 'We couldn\'t process your request. Please contact us on discord or support.utopian.io', type:'error' })
+    this.$store.dispatch("requestApproval").then(response => {
+      if (response.status !== 200) {
+        this.$notify({
+          group: "main",
+          text:
+            "We couldn't process your request. Please contact us on discord or support.utopian.io",
+          type: "error"
+        });
       }
-    })
+    });
   }
-}
+};
 </script>
 
 <style>
-
 .Box__key {
   height: 55.44px;
   width: 336px;
-  border-left: 1px solid #E0E2E5;
+  border-left: 1px solid #e0e2e5;
 }
 
 .Success {
-    height: 212px;
+  height: 212px;
 }
-
 </style>

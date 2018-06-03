@@ -1,19 +1,16 @@
 <template>
   <div class="progress-bar">
     <span class="bar">
-        <span class="progress"></span>
+      <span class="progress"/>
     </span>
-    </div>
+  </div>
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
 <style>
-
 @-webkit-keyframes loader {
   0% {
     width: 33%;
@@ -46,20 +43,19 @@ export default {
 }
 
 .progress {
--webkit-animation: loader 1s 0.5s ease forwards;
-    animation: loader 1s 0.5s ease forwards;
-    background: #4786FF;
-    color: #fff;
-    padding-top: 4px;
-    padding-right:0;
-    width: 0;
+  -webkit-animation: loader 1s 0.5s ease forwards;
+  animation: loader 1s 0.5s ease forwards;
+  background: #4786ff;
+  color: #fff;
+  padding-top: 4px;
+  padding-right: 0;
+  width: 0;
 }
 
 .progress-bar {
-    margin:0 auto;
-    width: 100%;
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
+  margin: 0 auto;
+  width: 100%;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
-
 </style>
